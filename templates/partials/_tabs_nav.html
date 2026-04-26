@@ -1,13 +1,13 @@
 <nav class="tabs-nav">
-  <a href="/" class="active"><i class="tab-icon"></i> ¿Qué es?</a>
-  <a href="/anuncios/">Anuncios</a>
-  <a href="/eventos/">Eventos</a>
-  <a href="/foro/">Foro</a>
-  <a href="/estudiantes/">Estudiantes</a>
-  <a href="/challenges/">Retos</a>
-  <a href="/challenges/create/">Entregar Reto</a>
-  <a href="/polls/">Encuestas</a>
-  <a href="/album/">Insignias</a>
+  <a href="/" {% if request.path == '/' %}class="active"{% endif %}><i class="tab-icon"></i> ¿Qué es?</a>
+  <a href="{% url 'announcements_list' %}" {% if '/announcements' in request.path %}class="active"{% endif %}>Anuncios</a>
+  <a href="/eventos/" {% if '/eventos/' in request.path %}class="active"{% endif %}>Eventos</a>
+  <a href="/foro/" {% if '/foro/' in request.path %}class="active"{% endif %}>Foro</a>
+  <a href="/estudiantes/" {% if '/estudiantes/' in request.path %}class="active"{% endif %}>Estudiantes</a>
+  <a href="/challenges/" {% if '/challenges/' in request.path %}class="active"{% endif %}>Retos</a>
+  <a href="/challenges/create/" {% if '/challenges/create/' in request.path %}class="active"{% endif %}>Entregar Reto</a>
+  <a href="/polls/" {% if '/polls/' in request.path %}class="active"{% endif %}>Encuestas</a>
+  <a href="/album/" {% if '/album/' in request.path %}class="active"{% endif %}>Insignias</a>
   <div class="dropdown">
     <a href="#">Documentos ▾</a>
     <div class="dropdown-menu">
@@ -16,5 +16,5 @@
       <a href="https://www.dropbox.com/login" target="_blank">Ir a Dropbox</a>
     </div>
   </div>
-  <a href="/admin/">Admin</a>
+  <a href="/admin/" {% if '/admin/' in request.path %}class="active"{% endif %}>Admin</a>
 </nav>
