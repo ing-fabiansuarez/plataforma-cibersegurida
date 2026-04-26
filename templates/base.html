@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CyberLearn — Academia Gamificada de Ciberseguridad{% endblock %}</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+    <!-- TOP BAR -->
+    {% include 'partials/_top_bar.html' %}
+
+    <!-- MAIN NAV -->
+    {% include 'partials/_main_nav.html' %}
+
+    <!-- TABS NAV -->
+    {% include 'partials/_tabs_nav.html' %}
+
+    <!-- PAGE CONTENT -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- FOOTER -->
+    {% include 'partials/_footer.html' %}
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
