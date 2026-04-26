@@ -12,6 +12,16 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     
+    <!-- Prevent flash: apply theme before render -->
+    <script>
+      (function() {
+        var theme = localStorage.getItem('cyberlearn-theme') || 'light';
+        if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
+    
     {% block extra_head %}{% endblock %}
 </head>
 <body>
@@ -34,6 +44,41 @@
 
     <!-- FOOTER -->
     {% include 'partials/_footer.html' %}
+
+    <!-- Theme toggle script -->
+    <script>
+      function toggleTheme() {
+        var html = document.documentElement;
+        var current = html.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        
+        if (next === 'dark') {
+          html.setAttribute('data-theme', 'dark');
+        } else {
+          html.removeAttribute('data-theme');
+        }
+        
+        localStorage.setItem('cyberlearn-theme', next);
+        updateToggleIcon(next);
+      }
+      
+      function updateToggleIcon(theme) {
+        var sun = document.getElementById('icon-sun');
+        var moon = document.getElementById('icon-moon');
+        if (sun && moon) {
+          if (theme === 'dark') {
+            sun.style.display = 'block';
+            moon.style.display = 'none';
+          } else {
+            sun.style.display = 'none';
+            moon.style.display = 'block';
+          }
+        }
+      }
+      
+      // Set correct icon on page load
+      updateToggleIcon(localStorage.getItem('cyberlearn-theme') || 'light');
+    </script>
 
     {% block extra_js %}{% endblock %}
 </body>
