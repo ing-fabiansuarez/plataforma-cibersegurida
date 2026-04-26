@@ -12,7 +12,7 @@
   </div>
   <div class="auth-links">
     {% if user.is_authenticated %}
-      <span style="color: white; font-size: 13px; margin-right: 10px;">Hola, {{ user.username }} ({{ user.get_role_display }})</span>
+      <span style="color: white; font-size: 13px; margin-right: 10px;">Hola, {{ user.first_name|default:user.username }} ({{ user.get_role_display }})</span>
       <form action="{% url 'logout' %}" method="post" style="display: inline;">
         {% csrf_token %}
         <button type="submit" class="btn btn-ghost">Salir</button>
