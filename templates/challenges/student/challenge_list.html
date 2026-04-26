@@ -9,8 +9,11 @@
         </div>
         <div class="col-md-4 text-md-end">
             <div class="p-3 rounded-lg bg-soft-primary d-inline-block border border-accent-subtle">
+
+
                 <span class="text-muted small d-block">Tu Puntuación Total</span>
-                <span class="h3 fw-bold text-primary mb-0">{{ user_progress.total_points|default:"0" }} <small class="fs-6">pts</small></span>
+                <span class="h3 fw-bold text-primary mb-0">{{ user_progress.total_points|default:"0" }} <small
+                        class="fs-6">pts</small></span>
             </div>
         </div>
     </div>
@@ -35,30 +38,35 @@
     <div class="row g-4">
         {% for challenge in challenges %}
         <div class="col-md-6 col-lg-4">
-            <div class="card h-100 border-0 shadow-sm bg-card hover-lift overflow-hidden {% if challenge.id in solved_challenges %}solved-card{% endif %}">
+            <div
+                class="card h-100 border-0 shadow-sm bg-card hover-lift overflow-hidden {% if challenge.id in solved_challenges %}solved-card{% endif %}">
                 {% if challenge.id in solved_challenges %}
                 <div class="solved-banner">
                     <i class="fas fa-check-circle me-1"></i> Resuelto
                 </div>
                 {% endif %}
-                
+
                 <div class="card-header bg-transparent border-0 pt-4 px-4">
-                    <span class="badge rounded-pill bg-soft-primary px-3 py-2 text-uppercase letter-spacing-1" style="font-size: 0.7rem;">
+                    <span class="badge rounded-pill bg-soft-primary px-3 py-2 text-uppercase letter-spacing-1"
+                        style="font-size: 0.7rem;">
                         {{ challenge.get_category_display }}
                     </span>
                 </div>
                 <div class="card-body px-4 pb-4">
-                    <h5 class="card-title fw-bold mb-3" style="font-family: var(--font-head);">{{ challenge.title }}</h5>
+                    <h5 class="card-title fw-bold mb-3" style="font-family: var(--font-head);">{{ challenge.title }}
+                    </h5>
                     <p class="text-muted small mb-4 text-truncate-2">
                         {{ challenge.description|truncatewords:20 }}
                     </p>
-                    
+
                     <div class="d-flex align-items-center mb-4">
                         <div class="me-3">
                             <span class="text-muted small d-block">Dificultad</span>
                             <div class="d-flex gap-1 mt-1">
                                 {% for i in "12345" %}
-                                <div style="width: 12px; height: 4px; border-radius: 2px;" class="{% if forloop.counter <= challenge.difficulty %}bg-primary{% else %}bg-border{% endif %}"></div>
+                                <div style="width: 12px; height: 4px; border-radius: 2px;"
+                                    class="{% if forloop.counter <= challenge.difficulty %}bg-primary{% else %}bg-border{% endif %}">
+                                </div>
                                 {% endfor %}
                             </div>
                         </div>
@@ -67,8 +75,11 @@
                             <span class="fw-bold text-primary">{{ challenge.points }}</span>
                         </div>
                     </div>
-                    
-                    <a href="{% url 'challenge_detail' challenge.pk %}" class="btn {% if challenge.id in solved_challenges %}btn-outline-primary{% else %}btn-primary{% endif %} w-100 py-2 fw-bold">
+                    Creado por {{ challenge.created_by.username }}
+
+
+                    <a href="{% url 'challenge_detail' challenge.pk %}"
+                        class="btn {% if challenge.id in solved_challenges %}btn-outline-primary{% else %}btn-primary{% endif %} w-100 py-2 fw-bold">
                         {% if challenge.id in solved_challenges %}Ver Detalles{% else %}Intentar Reto{% endif %}
                     </a>
                 </div>
@@ -88,38 +99,47 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
+
     [data-theme="dark"] .text-gradient {
         background: linear-gradient(45deg, #fff, var(--accent-2));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
+
     .bg-card {
         background-color: var(--white);
     }
+
     .bg-soft-primary {
         background-color: rgba(213, 28, 0, 0.05);
         color: var(--accent);
     }
+
     .bg-border {
         background-color: var(--border);
     }
+
     .hover-lift {
         transition: all 0.3s ease;
     }
+
     .hover-lift:hover {
         transform: translateY(-8px);
-        box-shadow: 0 1.5rem 4rem rgba(0,0,0,.15) !important;
+        box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, .15) !important;
     }
+
     .text-truncate-2 {
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
+
     .solved-card {
         opacity: 0.9;
         border: 1px solid rgba(40, 167, 69, 0.2) !important;
     }
+
     .solved-banner {
         background-color: #28a745;
         color: white;
@@ -130,6 +150,7 @@
         text-transform: uppercase;
         letter-spacing: 1px;
     }
+
     .border-accent-subtle {
         border-color: rgba(213, 28, 0, 0.2) !important;
     }
