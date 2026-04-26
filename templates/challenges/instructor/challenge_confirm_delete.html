@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card border-0 shadow-lg">
+                <div class="card-body p-5 text-center">
+                    <div class="mb-4">
+                        <i class="fas fa-exclamation-triangle fa-4x text-danger opacity-75"></i>
+                    </div>
+                    
+                    <h2 class="fw-bold mb-3" style="font-family: var(--font-head);">¿Eliminar Reto?</h2>
+                    <p class="text-muted mb-4">
+                        Estás a punto de eliminar el reto <strong class="text-dark">"{{ challenge.title }}"</strong>. 
+                        Esta acción no se puede deshacer y se perderán todas las estadísticas y soluciones asociadas.
+                    </p>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-danger btn-lg shadow-sm">
+                                <i class="fas fa-trash-alt me-2"></i> Confirmar Eliminación
+                            </button>
+                            <a href="{% url 'instructor_challenge_list' %}" class="btn btn-light btn-lg border">
+                                Cancelar y Volver
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

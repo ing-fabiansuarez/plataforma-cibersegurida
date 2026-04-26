@@ -389,6 +389,77 @@
   transform: rotate(30deg);
 }
 
+/* ── TOOLTIP NUBESITA ── */
+.has-tooltip {
+  position: relative;
+}
+
+.has-tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%) translateY(5px);
+  background: var(--navy);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-family: var(--font-body);
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  z-index: 1000;
+  pointer-events: none;
+  font-weight: 500;
+}
+
+.has-tooltip::before {
+  content: '';
+  position: absolute;
+  bottom: 95%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--navy);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  z-index: 1000;
+}
+
+.has-tooltip:hover::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.has-tooltip:hover::before {
+  opacity: 1;
+  visibility: visible;
+}
+
+[data-theme="dark"] .has-tooltip::after {
+  background: var(--navy-3);
+  color: #fff;
+}
+
+[data-theme="dark"] .has-tooltip::before {
+  border-top-color: var(--navy-3);
+}
+
+.pending-link {
+  opacity: 0.7;
+  cursor: help !important;
+}
+
+.pending-link:hover {
+  background: transparent !important;
+  color: var(--text-muted) !important;
+}
+
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 

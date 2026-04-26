@@ -1,20 +1,24 @@
 <nav class="tabs-nav">
   <a href="/" {% if request.path == '/' %}class="active"{% endif %}><i class="tab-icon"></i> ¿Qué es?</a>
   <a href="{% url 'announcements_list' %}" {% if '/announcements' in request.path %}class="active"{% endif %}>Anuncios</a>
-  <a href="/eventos/" {% if '/eventos/' in request.path %}class="active"{% endif %}>Eventos</a>
-  <a href="/foro/" {% if '/foro/' in request.path %}class="active"{% endif %}>Foro</a>
-  <a href="/estudiantes/" {% if '/estudiantes/' in request.path %}class="active"{% endif %}>Estudiantes</a>
-  <a href="/challenges/" {% if '/challenges/' in request.path %}class="active"{% endif %}>Retos</a>
-  <a href="/challenges/create/" {% if '/challenges/create/' in request.path %}class="active"{% endif %}>Entregar Reto</a>
-  <a href="/polls/" {% if '/polls/' in request.path %}class="active"{% endif %}>Encuestas</a>
-  <a href="/album/" {% if '/album/' in request.path %}class="active"{% endif %}>Insignias</a>
+  <a href="#" class="has-tooltip pending-link" data-tooltip="Próximamente...">Eventos</a>
+  <a href="#" class="has-tooltip pending-link" data-tooltip="Próximamente...">Foro</a>
+  <a href="#" class="has-tooltip pending-link" data-tooltip="Próximamente...">Estudiantes</a>
+  <a href="/challenges/" {% if '/challenges/' in request.path and 'instructor' not in request.path and 'create' not in request.path %}class="active"{% endif %}>Retos</a>
+  {% if user.is_authenticated and user.role == 'INSTRUCTOR' or user.is_superuser %}
+    <a href="{% url 'instructor_challenge_list' %}" {% if 'instructor/challenges/' in request.path and 'create' not in request.path %}class="active"{% endif %}>Panel Instructor</a>
+   {% endif %}
+  <a href="#" class="has-tooltip pending-link" data-tooltip="Próximamente...">Encuestas</a>
+  <a href="#" class="has-tooltip pending-link" data-tooltip="Próximamente...">Insignias</a>
   <div class="dropdown">
     <a href="#">Documentos ▾</a>
     <div class="dropdown-menu">
-      <a href="/repositorio/">Repositorio</a>
-      <a href="#">Nuestro Himno</a>
+      <a href="#" class="has-tooltip pending-link" data-tooltip="Próximamente...">Repositorio</a>
+      <a href="#" class="has-tooltip pending-link" data-tooltip="Próximamente...">Nuestro Himno</a>
       <a href="https://www.dropbox.com/login" target="_blank">Ir a Dropbox</a>
     </div>
   </div>
-  <a href="/admin/" {% if '/admin/' in request.path %}class="active"{% endif %}>Admin</a>
+  {% if user.is_authenticated and user.is_staff or user.is_superuser %}
+    <a href="/admin/" {% if '/admin/' in request.path %}class="active"{% endif %}>Admin</a>
+  {% endif %}
 </nav>

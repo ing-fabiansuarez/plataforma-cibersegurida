@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="mb-4">
+        <a href="{% url 'instructor_challenge_list' %}" class="btn btn-link p-0 text-muted text-decoration-none">
+            <i class="fas fa-arrow-left me-2"></i> Volver al panel
+        </a>
+    </div>
+
+    <div class="row g-4">
+        <!-- Resumen del Reto -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm bg-card mb-4">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <span class="badge rounded-pill bg-soft-primary px-3 py-2 text-uppercase letter-spacing-1" style="font-size: 0.7rem;">
+                            {{ challenge.get_category_display }}
+                        </span>
+                        <div class="dropdown">
+                            <button class="btn btn-link text-muted p-0" data-bs-toggle="dropdown">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                                <li><a class="dropdown-item" href="{% url 'challenge_edit' challenge.pk %}"><i class="fas fa-edit me-2"></i> Editar Reto</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="{% url 'challenge_delete' challenge.pk %}"><i class="fas fa-trash-alt me-2"></i> Eliminar</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <h3 class="fw-bold mb-3" style="font-family: var(--font-head);">{{ challenge.title }}</h3>
+                    
+                    <div class="d-grid gap-2 mb-4">
+                        <a href="{% url 'challenge_edit' challenge.pk %}" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-edit me-2"></i> Editar este reto
+                        </a>
+                    </div>
+
+                    <p class="text-muted small mb-4">{{ challenge.description|truncatewords:30 }}</p>
+                    
+                    <div class="d-flex flex-column gap-3 pt-3 border-top border-border">
+                        <div class="d-flex justify-content-between">
+                            <span class="text-muted small">Puntos</span>
+                            <span class="fw-bold text-primary">{{ challenge.points }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span class="text-muted small">Dificultad</span>
+                            <span class="fw-bold">{{ challenge.get_difficulty_display }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span class="text-muted small">Estado</span>
+                            {% if challenge.is_published %}
+                            <span class="text-success small fw-bold"><i class="fas fa-check-circle me-1"></i> Publicado</span>
+                            {% else %}
+                            <span class="text-warning small fw-bold"><i class="fas fa-pencil-alt me-1"></i> Borrador</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estadísticas Rápidas -->
+            <div class="row g-3">
+                <div class="col-6">
+                    <div class="card border-0 shadow-sm bg-card p-3 text-center">
+                        <span class="d-block text-muted small mb-1">Intentos</span>
+                        <span class="h4 fw-bold mb-0">{{ submissions.count }}</span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card border-0 shadow-sm bg-card p-3 text-center">
+                        <span class="d-block text-muted small mb-1">Resueltos</span>
+                        <span class="h4 fw-bold mb-0 text-success">{{ solvers.count }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Listado de Estudiantes -->
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm bg-card">
+                <div class="card-header bg-transparent border-bottom border-border p-4">
+                    <h5 class="fw-bold mb-0" style="font-family: var(--font-head);">Estudiantes que lo han resuelto</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th class="px-4 py-3 border-0">Estudiante</th>
+                                    <th class="px-4 py-3 border-0">Fecha de Resolución</th>
+                                    <th class="px-4 py-3 border-0 text-end">Flag Entregada</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for solver in solvers %}
+                                <tr>
+                                    <td class="px-4 py-3">
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar-circle me-3">
+                                                {{ solver.user.username|slice:":1"|upper }}
+                                            </div>
+                                            <div>
+                                                <span class="fw-bold d-block">{{ solver.user.get_full_name|default:solver.user.username }}</span>
+                                                <span class="text-muted small">@{{ solver.user.username }}</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 text-muted small">
+                                        {{ solver.solved_at|date:"d M Y, H:i" }}
+                                    </td>
+                                    <td class="px-4 py-3 text-end">
+                                        <code class="bg-soft-success text-success px-2 py-1 rounded small">
+                                            {{ solver.flag_submitted|truncatechars:15 }}
+                                        </code>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="3" class="text-center py-5">
+                                        <div class="text-muted opacity-50 mb-3">
+                                            <i class="fas fa-user-clock fa-3x"></i>
+                                        </div>
+                                        <p class="text-muted">Nadie ha resuelto este reto todavía.</p>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Historial de Intentos (Opcional) -->
+            <div class="mt-4">
+                <h6 class="text-muted text-uppercase letter-spacing-1 fw-bold mb-3" style="font-size: 0.75rem;">Historial Reciente de Intentos</h6>
+                <div class="card border-0 shadow-sm bg-card">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-sm table-hover mb-0">
+                                <tbody>
+                                    {% for sub in submissions|slice:":10" %}
+                                    <tr>
+                                        <td class="px-4 py-2 border-0 small">
+                                            <span class="fw-bold">{{ sub.user.username }}</span>
+                                        </td>
+                                        <td class="px-4 py-2 border-0 small">
+                                            {% if sub.is_correct %}
+                                            <span class="text-success"><i class="fas fa-check me-1"></i> Correcto</span>
+                                            {% else %}
+                                            <span class="text-danger"><i class="fas fa-times me-1"></i> Incorrecto</span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="px-4 py-2 border-0 text-muted small text-end">
+                                            {{ sub.solved_at|timesince }} ago
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-card { background-color: var(--white); }
+    .bg-soft-primary { background-color: rgba(213, 28, 0, 0.1); color: var(--accent); }
+    .bg-soft-success { background-color: rgba(40, 167, 69, 0.1); }
+    .avatar-circle {
+        width: 36px;
+        height: 36px;
+        background: var(--navy);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 14px;
+    }
+    .letter-spacing-1 { letter-spacing: 1px; }
+</style>
+{% endblock %}

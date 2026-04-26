@@ -14,7 +14,9 @@ def is_student(user):
 @login_required
 @user_passes_test(is_instructor)
 def instructor_challenge_list(request):
-    challenges = Challenge.objects.filter(created_by=request.user)
+    # Los instructores ven todos los retos, pero luego en la plantilla 
+    # controlaremos qué pueden editar
+    challenges = Challenge.objects.all().select_related('created_by').order_by('-created_at')
     return render(request, 'challenges/instructor/challenge_list.html', {'challenges': challenges})
 
 @login_required
@@ -38,7 +40,13 @@ def challenge_create(request):
 @login_required
 @user_passes_test(is_instructor)
 def challenge_edit(request, pk):
-    challenge = get_object_or_404(Challenge, pk=pk, created_by=request.user)
+    challenge = get_object_or_404(Challenge, pk=pk)
+    
+    # Solo el creador o un superusuario puede editar
+    if challenge.created_by != request.user and not request.user.is_superuser:
+        messages.error(request, 'No tienes permiso para editar este reto porque fue creado por otro instructor.')
+        return redirect('instructor_challenge_list')
+
     if request.method == 'POST':
         form = ChallengeForm(request.POST, instance=challenge)
         if form.is_valid():
@@ -59,6 +67,43 @@ def challenge_edit(request, pk):
         'title': 'Editar Reto',
         'challenge': challenge
     })
+
+@login_required
+@user_passes_test(is_instructor)
+def instructor_challenge_detail(request, pk):
+    challenge = get_object_or_404(Challenge, pk=pk)
+    
+    # Solo el creador o un superusuario puede ver los detalles internos
+    if challenge.created_by != request.user and not request.user.is_superuser:
+        messages.error(request, 'No tienes permiso para ver los detalles de este reto.')
+        return redirect('instructor_challenge_list')
+
+    submissions = Submission.objects.filter(challenge=challenge).select_related('user').order_by('-solved_at')
+    
+    # Filtrar solo las correctas para el listado de "estudiantes que lo han resuelto"
+    solvers = submissions.filter(is_correct=True)
+    
+    return render(request, 'challenges/instructor/challenge_detail.html', {
+        'challenge': challenge,
+        'submissions': submissions,
+        'solvers': solvers,
+    })
+
+@login_required
+@user_passes_test(is_instructor)
+def challenge_delete(request, pk):
+    challenge = get_object_or_404(Challenge, pk=pk)
+    
+    # Solo el creador o un superusuario puede eliminar
+    if challenge.created_by != request.user and not request.user.is_superuser:
+        messages.error(request, 'No tienes permiso para eliminar este reto.')
+        return redirect('instructor_challenge_list')
+
+    if request.method == 'POST':
+        challenge.delete()
+        messages.success(request, 'Reto eliminado con éxito.')
+        return redirect('instructor_challenge_list')
+    return render(request, 'challenges/instructor/challenge_confirm_delete.html', {'challenge': challenge})
 
 # Student Views
 @login_required
