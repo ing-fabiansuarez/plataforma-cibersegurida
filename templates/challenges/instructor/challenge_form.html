@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="mb-4">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'instructor_challenge_list' %}" class="text-decoration-none">Panel</a></li>
+                        <li class="breadcrumb-item active">{{ title }}</li>
+                    </ol>
+                </nav>
+                <h1 class="display-6 fw-bold text-gradient" style="font-family: var(--font-head);">{{ title }}</h1>
+                <p class="text-muted">Completa los detalles del desafío técnico para tus estudiantes.</p>
+            </div>
+
+            <div class="card border-0 shadow-sm bg-card overflow-hidden">
+                <div class="card-body p-0">
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        
+                        <!-- Sección 1: Información Básica -->
+                        <div class="p-4 border-bottom border-border bg-soft-light">
+                            <h5 class="fw-bold mb-0" style="font-family: var(--font-head);"><i class="fas fa-info-circle me-2 text-primary"></i> Información Básica</h5>
+                        </div>
+                        <div class="p-4">
+                            <div class="mb-4">
+                                <label for="{{ form.title.id_for_label }}" class="form-label fw-semibold small text-uppercase">Título del Reto</label>
+                                {{ form.title }}
+                                {% if form.title.errors %}
+                                <div class="invalid-feedback d-block">{{ form.title.errors|join:", " }}</div>
+                                {% endif %}
+                                <div class="form-text">Ejemplo: "Inyección SQL Nivel 1"</div>
+                            </div>
+
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <label for="{{ form.category.id_for_label }}" class="form-label fw-semibold small text-uppercase">Categoría</label>
+                                    {{ form.category }}
+                                    {% if form.category.errors %}
+                                    <div class="invalid-feedback d-block">{{ form.category.errors|join:", " }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="{{ form.difficulty.id_for_label }}" class="form-label fw-semibold small text-uppercase">Dificultad (1-5)</label>
+                                    {{ form.difficulty }}
+                                    {% if form.difficulty.errors %}
+                                    <div class="invalid-feedback d-block">{{ form.difficulty.errors|join:", " }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sección 2: El Desafío -->
+                        <div class="p-4 border-bottom border-top border-border bg-soft-light">
+                            <h5 class="fw-bold mb-0" style="font-family: var(--font-head);"><i class="fas fa-terminal me-2 text-primary"></i> El Desafío</h5>
+                        </div>
+                        <div class="p-4">
+                            <div class="mb-4">
+                                <label for="{{ form.description.id_for_label }}" class="form-label fw-semibold small text-uppercase">Descripción / Instrucciones</label>
+                                {{ form.description }}
+                                {% if form.description.errors %}
+                                <div class="invalid-feedback d-block">{{ form.description.errors|join:", " }}</div>
+                                {% endif %}
+                                <div class="form-text">Usa Markdown para dar formato al contenido.</div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="{{ form.flag_raw.id_for_label }}" class="form-label fw-semibold small text-uppercase">Flag del Reto</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0"><i class="fas fa-flag text-danger"></i></span>
+                                    {{ form.flag_raw }}
+                                </div>
+                                {% if form.flag_raw.errors %}
+                                <div class="invalid-feedback d-block">{{ form.flag_raw.errors|join:", " }}</div>
+                                {% endif %}
+                                <div class="form-text">{{ form.flag_raw.help_text }}</div>
+                            </div>
+                        </div>
+
+                        <!-- Sección 3: Recompensa y Estado -->
+                        <div class="p-4 border-bottom border-top border-border bg-soft-light">
+                            <h5 class="fw-bold mb-0" style="font-family: var(--font-head);"><i class="fas fa-award me-2 text-primary"></i> Recompensa</h5>
+                        </div>
+                        <div class="p-4">
+                            <div class="row align-items-center g-4">
+                                <div class="col-md-6">
+                                    <label for="{{ form.points.id_for_label }}" class="form-label fw-semibold small text-uppercase">Puntos a Otorgar</label>
+                                    <div class="input-group">
+                                        {{ form.points }}
+                                        <span class="input-group-text bg-light border-start-0">pts</span>
+                                    </div>
+                                    {% if form.points.errors %}
+                                    <div class="invalid-feedback d-block">{{ form.points.errors|join:", " }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check form-switch pt-4">
+                                        {{ form.is_published }}
+                                        <label class="form-check-label fw-bold" for="{{ form.is_published.id_for_label }}">Publicar Reto</label>
+                                    </div>
+                                    <div class="form-text">Si está desactivado, el reto se guardará como borrador.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-light d-flex justify-content-between">
+                            <a href="{% url 'instructor_challenge_list' %}" class="btn btn-outline-secondary px-4">Cancelar</a>
+                            <button type="submit" class="btn btn-primary btn-lg px-5 shadow">
+                                <i class="fas fa-save me-2"></i> Guardar Reto
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .text-gradient {
+        background: linear-gradient(45deg, var(--navy), var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    [data-theme="dark"] .text-gradient {
+        background: linear-gradient(45deg, #fff, var(--accent-2));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .bg-card {
+        background-color: var(--white);
+    }
+    .bg-soft-light {
+        background-color: var(--sand-2);
+    }
+    .border-border {
+        border-color: var(--border) !important;
+    }
+    .form-control, .form-select {
+        border: 1.5px solid var(--border);
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+    }
+    .form-control:focus, .form-select:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 0.25rem rgba(213, 28, 0, 0.1);
+    }
+    .input-group-text {
+        border: 1.5px solid var(--border);
+    }
+</style>
+
+<script>
+    // Add Bootstrap classes to form fields if they don't have them
+    document.addEventListener('DOMContentLoaded', function() {
+        const inputs = document.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            if (input.type !== 'checkbox') {
+                input.classList.add('form-control');
+            } else {
+                input.classList.add('form-check-input');
+            }
+        });
+    });
+</script>
+{% endblock %}

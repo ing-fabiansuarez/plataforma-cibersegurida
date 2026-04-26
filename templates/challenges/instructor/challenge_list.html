@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-end mb-5">
+        <div>
+            <h1 class="display-5 fw-bold text-gradient mb-2" style="font-family: var(--font-head);">Panel de Instructor</h1>
+            <p class="text-muted mb-0">Gestiona y despliega desafíos de ciberseguridad para tus estudiantes.</p>
+        </div>
+        <a href="{% url 'challenge_create' %}" class="btn btn-primary btn-lg px-4 shadow-sm">
+            <i class="fas fa-plus-circle me-2"></i> Nuevo Reto
+        </a>
+    </div>
+
+    <div class="row g-4">
+        {% for challenge in challenges %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm bg-card hover-lift">
+                <div class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+                    <span class="badge rounded-pill bg-soft-primary px-3 py-2 text-uppercase letter-spacing-1" style="font-size: 0.7rem;">
+                        {{ challenge.get_category_display }}
+                    </span>
+                    <div class="dropdown">
+                        <button class="btn btn-link text-muted p-0" data-bs-toggle="dropdown">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                            <li><a class="dropdown-item" href="{% url 'challenge_edit' challenge.pk %}"><i class="fas fa-edit me-2"></i> Editar</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="#"><i class="fas fa-trash-alt me-2"></i> Eliminar</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-body px-4 pb-4">
+                    <h5 class="card-title fw-bold mb-3" style="font-family: var(--font-head);">{{ challenge.title }}</h5>
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="me-3">
+                            <span class="text-muted small d-block">Dificultad</span>
+                            <div class="d-flex gap-1 mt-1">
+                                {% for i in "12345" %}
+                                <div style="width: 12px; height: 4px; border-radius: 2px;" class="{% if forloop.counter <= challenge.difficulty %}bg-primary{% else %}bg-border{% endif %}"></div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="ms-auto text-end">
+                            <span class="text-muted small d-block">Puntos</span>
+                            <span class="fw-bold text-primary">{{ challenge.points }}</span>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between pt-3 border-top border-border">
+                        <div class="d-flex align-items-center">
+                            {% if challenge.is_published %}
+                            <span class="text-success small"><i class="fas fa-check-circle me-1"></i> Publicado</span>
+                            {% else %}
+                            <span class="text-warning small"><i class="fas fa-pencil-alt me-1"></i> Borrador</span>
+                            {% endif %}
+                        </div>
+                        <div class="text-muted small">
+                            <i class="fas fa-users me-1"></i> {{ challenge.submissions.filter.count|default:"0" }} solves
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="text-center py-5 border-2 border-dashed border-border rounded-lg bg-soft-light">
+                <div class="mb-4">
+                    <i class="fas fa-shield-virus fa-4x text-muted opacity-25"></i>
+                </div>
+                <h3 class="fw-bold mb-2">No has creado retos todavía</h3>
+                <p class="text-muted mb-4">Empieza creando tu primer desafío de ciberseguridad para la comunidad.</p>
+                <a href="{% url 'challenge_create' %}" class="btn btn-primary px-4">
+                    Crear mi primer reto
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .text-gradient {
+        background: linear-gradient(45deg, var(--navy), var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    [data-theme="dark"] .text-gradient {
+        background: linear-gradient(45deg, #fff, var(--accent-2));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .bg-card {
+        background-color: var(--white);
+    }
+    .bg-soft-primary {
+        background-color: rgba(213, 28, 0, 0.1);
+        color: var(--accent);
+    }
+    .bg-border {
+        background-color: var(--border);
+    }
+    .border-border {
+        border-color: var(--border) !important;
+    }
+    .hover-lift {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important;
+    }
+    .letter-spacing-1 {
+        letter-spacing: 1px;
+    }
+    .border-dashed {
+        border-style: dashed !important;
+    }
+    .bg-soft-light {
+        background-color: var(--sand-2);
+    }
+</style>
+{% endblock %}

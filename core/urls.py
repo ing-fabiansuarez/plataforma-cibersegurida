@@ -24,6 +24,9 @@ urlpatterns = [
     path('', include('main.urls')),
     path('', include('users.urls')),
     path('announcements/', include('announcements.urls')),
+    
+    # Challenges CTF
+    path('', include('challenges.urls')),
 ]
 
 # Serve media files in development
