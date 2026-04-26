@@ -16,8 +16,10 @@
 </head>
 <body>
 
-    <!-- TOP BAR -->
-    {% include 'partials/_top_bar.html' %}
+    <!-- TOP BAR (Solo en Home) -->
+    {% if request.path == '/' %}
+        {% include 'partials/_top_bar.html' %}
+    {% endif %}
 
     <!-- MAIN NAV -->
     {% include 'partials/_main_nav.html' %}

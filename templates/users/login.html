@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Ingresar — CyberLearn{% endblock %}
+
+{% block content %}
+<div style="max-width: 400px; margin: 4rem auto; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2.5rem; box-shadow: 0 12px 32px rgba(0,0,0,0.05);">
+    <div style="text-align: center; margin-bottom: 2rem;">
+        <div style="width: 64px; height: 64px; background: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 32px; height: 32px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+        </div>
+        <h2 style="font-family: var(--font-head); color: var(--navy); font-size: 24px;">Bienvenido</h2>
+        <p style="color: var(--text-muted); font-size: 14px; margin-top: 5px;">Ingresa tus credenciales para continuar</p>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <div style="margin-bottom: 1.5rem;">
+            <label for="id_username" style="display: block; font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px;">Usuario</label>
+            <input type="text" name="username" id="id_username" required style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius); font-family: var(--font-body); font-size: 14px; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--navy)'" onblur="this.style.borderColor='var(--border)'">
+        </div>
+        <div style="margin-bottom: 2rem;">
+            <label for="id_password" style="display: block; font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px;">Contraseña</label>
+            <input type="password" name="password" id="id_password" required style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius); font-family: var(--font-body); font-size: 14px; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--navy)'" onblur="this.style.borderColor='var(--border)'">
+        </div>
+        
+        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 14px; font-size: 15px;">
+            Ingresar al Sistema
+        </button>
+    </form>
+
+    <div style="text-align: center; margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 1.5rem;">
+        <p style="font-size: 13px; color: var(--text-muted);">¿No tienes cuenta? <a href="{% url 'signup' %}" style="color: var(--accent); font-weight: 600; text-decoration: none;">Regístrate aquí</a></p>
+    </div>
+</div>
+{% endblock %}
