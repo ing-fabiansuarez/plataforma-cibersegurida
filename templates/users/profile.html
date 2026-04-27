@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 
 {% block content %}
 <div class="container py-5">
@@ -9,7 +9,7 @@
             <div class="profile-card p-4 shadow-sm text-center">
                 <div class="avatar-container mb-3 position-relative d-inline-block">
                     {% if profile_user.avatar %}
-                        <img src="{{ profile_user.avatar.url }}" alt="Avatar" class="profile-avatar shadow">
+                        <img src="{{ profile_user.avatar.url }}" alt="{% trans 'Avatar' %}" class="profile-avatar shadow">
                     {% else %}
                         <div class="profile-avatar-placeholder d-flex align-items-center justify-content-center shadow">
                             <i class="fas fa-user fa-4x opacity-50"></i>
@@ -26,7 +26,7 @@
                 <!-- XP Bar -->
                 <div class="xp-container mb-4 text-start">
                     <div class="d-flex justify-content-between align-items-end mb-2">
-                        <span class="xp-label">Progreso de Nivel</span>
+                        <span class="xp-label">{% trans "Progreso de Nivel" %}</span>
                         <span class="xp-value">{{ progress.xp_current_level }} / {{ progress.xp_next_level }} <small>XP</small></span>
                     </div>
                     <div class="progress xp-progress-bg">
@@ -43,19 +43,19 @@
                 <div class="stats-grid d-flex justify-content-center gap-4 py-3 border-top border-bottom">
                     <div class="stat-item">
                         <div class="stat-number">{{ progress.total_points }}</div>
-                        <div class="stat-label">Puntos</div>
+                        <div class="stat-label">{% trans "Puntos" %}</div>
                     </div>
                     <div class="stat-divider"></div>
                     <div class="stat-item">
                         <div class="stat-number">{{ progress.solved_challenges.count }}</div>
-                        <div class="stat-label">Retos</div>
+                        <div class="stat-label">{% trans "Retos" %}</div>
                     </div>
                 </div>
             </div>
 
             <!-- Category Mastery -->
             <div class="profile-card mt-4 p-4 shadow-sm">
-                <h5 class="section-title mb-4"><i class="fas fa-bullseye me-2"></i>Dominio por Categoría</h5>
+                <h5 class="section-title mb-4"><i class="fas fa-bullseye me-2"></i>{% trans "Dominio por Categoría" %}</h5>
                 {% for cat in category_mastery %}
                     <div class="mastery-item mb-3">
                         <div class="d-flex justify-content-between mb-1">
@@ -76,7 +76,7 @@
         <div class="col-lg-8">
             <div class="profile-card p-4 shadow-sm mb-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h4 class="section-title mb-0"><i class="fas fa-medal me-2"></i>Insignias Obtenidas</h4>
+                    <h4 class="section-title mb-0"><i class="fas fa-medal me-2"></i>{% trans "Insignias Obtenidas" %}</h4>
                     <span class="badge count-badge">{{ earned_badges.count }}</span>
                 </div>
                 
@@ -107,7 +107,7 @@
                     <div class="col-12 text-center py-5">
                         <div class="empty-state">
                             <i class="fas fa-award fa-4x mb-3 opacity-20"></i>
-                            <p>¡Aún no has desbloqueado insignias! Sigue hackeando.</p>
+                            <p>{% trans "¡Aún no has desbloqueado insignias! Sigue hackeando." %}</p>
                         </div>
                     </div>
                     {% endfor %}
@@ -116,7 +116,7 @@
 
             <!-- Locked Badges -->
             <div class="profile-card p-4 shadow-sm">
-                <h5 class="section-title mb-4"><i class="fas fa-lock me-2"></i>Próximos Logros</h5>
+                <h5 class="section-title mb-4"><i class="fas fa-lock me-2"></i>{% trans "Próximos Logros" %}</h5>
                 <div class="row row-cols-3 row-cols-md-5 g-3">
                     {% for badge in locked_badges %}
                     <div class="col">

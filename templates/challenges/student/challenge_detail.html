@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
 <div class="container py-5">
@@ -6,7 +7,7 @@
         <div class="col-lg-8">
             <div class="mb-4">
                 <a href="{% url 'student_challenge_list' %}" class="btn btn-link text-decoration-none p-0 mb-3 text-muted">
-                    <i class="fas fa-arrow-left me-1"></i> Volver a los retos
+                    <i class="fas fa-arrow-left me-1"></i> {% trans "Volver a los retos" %}
                 </a>
                 <h1 class="display-5 fw-bold text-gradient mb-2" style="font-family: var(--font-head);">{{ challenge.title }}</h1>
                 <div class="d-flex gap-2 flex-wrap mb-4">
@@ -14,7 +15,7 @@
                         {{ challenge.get_category_display }}
                     </span>
                     <span class="badge rounded-pill bg-light text-dark px-3 py-2 text-uppercase letter-spacing-1 border" style="font-size: 0.7rem;">
-                        Dificultad: {{ challenge.difficulty }}/5
+                        {% trans "Dificultad" %}: {{ challenge.difficulty }}/5
                     </span>
                     <span class="badge rounded-pill bg-gold-soft text-dark px-3 py-2 text-uppercase letter-spacing-1 border" style="font-size: 0.7rem;">
                         <i class="fas fa-trophy me-1 text-warning"></i> {{ challenge.points }} pts
@@ -24,7 +25,7 @@
 
             <div class="card border-0 shadow-sm bg-card mb-4 overflow-hidden">
                 <div class="card-header bg-soft-light py-3 px-4 border-bottom border-border">
-                    <h5 class="fw-bold mb-0" style="font-family: var(--font-head);"><i class="fas fa-file-alt me-2 text-primary"></i> Descripción del Desafío</h5>
+                    <h5 class="fw-bold mb-0" style="font-family: var(--font-head);"><i class="fas fa-file-alt me-2 text-primary"></i> {% trans "Descripción del Desafío" %}</h5>
                 </div>
                 <div class="card-body p-4">
                     <div class="challenge-description lead fs-6">
@@ -37,14 +38,14 @@
             <div class="alert alert-success border-0 shadow-sm d-flex align-items-center p-4 mb-4">
                 <i class="fas fa-check-circle fa-3x me-4"></i>
                 <div>
-                    <h4 class="alert-heading fw-bold mb-1">¡Reto Superado!</h4>
-                    <p class="mb-0">Ya has resuelto este desafío correctamente. ¡Sigue así!</p>
+                    <h4 class="alert-heading fw-bold mb-1">{% trans "¡Reto Superado!" %}</h4>
+                    <p class="mb-0">{% trans "Ya has resuelto este desafío correctamente. ¡Sigue así!" %}</p>
                 </div>
             </div>
             {% else %}
             <div class="card border-0 shadow-sm bg-card overflow-hidden">
                 <div class="card-header bg-soft-light py-3 px-4 border-bottom border-border">
-                    <h5 class="fw-bold mb-0" style="font-family: var(--font-head);"><i class="fas fa-flag me-2 text-danger"></i> Enviar Flag</h5>
+                    <h5 class="fw-bold mb-0" style="font-family: var(--font-head);"><i class="fas fa-flag me-2 text-danger"></i> {% trans "Enviar Flag" %}</h5>
                 </div>
                 <div class="card-body p-4">
                     <form method="post" class="row g-3">
@@ -56,7 +57,7 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold shadow">Verificar</button>
+                            <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold shadow">{% trans "Verificar" %}</button>
                         </div>
                     </form>
                     {% if messages %}
@@ -74,19 +75,19 @@
         <div class="col-lg-4">
             <div class="card border-0 shadow-sm bg-card mb-4">
                 <div class="card-header bg-transparent py-3 px-4 border-bottom border-border">
-                    <h5 class="fw-bold mb-0" style="font-family: var(--font-head);">Estadísticas</h5>
+                    <h5 class="fw-bold mb-0" style="font-family: var(--font-head);">{% trans "Estadísticas" %}</h5>
                 </div>
                 <div class="card-body p-4">
                     <div class="d-flex justify-content-between mb-3 pb-3 border-bottom border-border">
-                        <span class="text-muted">Resoluciones</span>
+                        <span class="text-muted">{% trans "Resoluciones" %}</span>
                         <span class="fw-bold">{{ solve_count }}</span>
                     </div>
                     <div class="d-flex justify-content-between mb-3 pb-3 border-bottom border-border">
-                        <span class="text-muted">Puntos</span>
+                        <span class="text-muted">{% trans "Puntos" %}</span>
                         <span class="fw-bold text-primary">{{ challenge.points }}</span>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <span class="text-muted">Autor</span>
+                        <span class="text-muted">{% trans "Autor" %}</span>
                         <span class="fw-bold">{{ challenge.created_by.username }}</span>
                     </div>
                 </div>
@@ -94,8 +95,8 @@
 
             <div class="card border-0 shadow-sm bg-card bg-gradient-dark text-white p-4 text-center">
                 <i class="fas fa-lightbulb fa-3x mb-3 text-warning opacity-75"></i>
-                <h5 class="fw-bold mb-2">¿Necesitas ayuda?</h5>
-                <p class="small mb-0 opacity-75">Investiga sobre {{ challenge.get_category_display }} y herramientas como Wireshark, Burp Suite o CyberChef según el reto.</p>
+                <h5 class="fw-bold mb-2">{% trans "¿Necesitas ayuda?" %}</h5>
+                <p class="small mb-0 opacity-75">{% blocktrans with category=challenge.get_category_display %}Investiga sobre {{ category }} y herramientas como Wireshark, Burp Suite o CyberChef según el reto.{% endblocktrans %}</p>
             </div>
         </div>
     </div>

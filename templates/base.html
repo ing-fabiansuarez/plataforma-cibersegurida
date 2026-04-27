@@ -1,10 +1,10 @@
-{% load static %}
+{% load static i18n %}
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}CyberLearn — Academia Gamificada de Ciberseguridad{% endblock %}</title>
+    <title>{% block title %}CyberLearn — <span data-translate="Academia Gamificada de Ciberseguridad">Academia Gamificada de Ciberseguridad</span>{% endblock %}</title>
     
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -20,6 +20,9 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    <!-- i18n Script -->
+    <script src="{% static 'js/i18n.js' %}"></script>
     
     <!-- Prevent flash: apply theme before render -->
     <script>
@@ -46,6 +49,7 @@
     <!-- TABS NAV -->
     {% include 'partials/_tabs_nav.html' %}
 
+    
     <!-- PAGE CONTENT -->
     <main class="main-content">
         {% block content %}{% endblock %}

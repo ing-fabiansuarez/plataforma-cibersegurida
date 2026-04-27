@@ -1,17 +1,18 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
 <div class="container py-5">
     <div class="row mb-5 align-items-center">
         <div class="col-md-8">
-            <h1 class="display-5 fw-bold text-gradient mb-2" style="font-family: var(--font-head);">Desafíos CTF</h1>
-            <p class="text-muted fs-5">Pon a prueba tus habilidades de hacking ético y escala en el leaderboard.</p>
+            <h1 class="display-5 fw-bold text-gradient mb-2" style="font-family: var(--font-head);">{% trans "Desafíos CTF" %}</h1>
+            <p class="text-muted fs-5">{% trans "Pon a prueba tus habilidades de hacking ético y escala en el leaderboard." %}</p>
         </div>
         <div class="col-md-4 text-md-end">
             <div class="p-3 rounded-lg bg-soft-primary d-inline-block border border-accent-subtle">
 
 
-                <span class="text-muted small d-block">Tu Puntuación Total</span>
+                <span class="text-muted small d-block">{% trans "Tu Puntuación Total" %}</span>
                 <span class="h3 fw-bold text-primary mb-0">{{ user_progress.total_points|default:"0" }} <small
                         class="fs-6">pts</small></span>
             </div>
@@ -23,15 +24,15 @@
         <div class="col-md-4">
             <div class="input-group">
                 <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>
-                <input type="text" class="form-control border-start-0" placeholder="Buscar reto...">
+                <input type="text" class="form-control border-start-0" placeholder="{% trans 'Buscar reto...' %}">
             </div>
         </div>
         <div class="col-md-8 d-flex gap-2 flex-wrap">
-            <button class="btn btn-outline-secondary btn-sm rounded-pill px-3 active">Todos</button>
-            <button class="btn btn-outline-secondary btn-sm rounded-pill px-3">Web</button>
-            <button class="btn btn-outline-secondary btn-sm rounded-pill px-3">Criptografía</button>
-            <button class="btn btn-outline-secondary btn-sm rounded-pill px-3">Forense</button>
-            <button class="btn btn-outline-secondary btn-sm rounded-pill px-3">OSINT</button>
+            <button class="btn btn-outline-secondary btn-sm rounded-pill px-3 active">{% trans "Todos" %}</button>
+            <button class="btn btn-outline-secondary btn-sm rounded-pill px-3">{% trans "Web" %}</button>
+            <button class="btn btn-outline-secondary btn-sm rounded-pill px-3">{% trans "Criptografía" %}</button>
+            <button class="btn btn-outline-secondary btn-sm rounded-pill px-3">{% trans "Forense" %}</button>
+            <button class="btn btn-outline-secondary btn-sm rounded-pill px-3">{% trans "OSINT" %}</button>
         </div>
     </div>
 
@@ -42,7 +43,7 @@
                 class="card h-100 border-0 shadow-sm bg-card hover-lift overflow-hidden {% if challenge.id in solved_challenges %}solved-card{% endif %}">
                 {% if challenge.id in solved_challenges %}
                 <div class="solved-banner">
-                    <i class="fas fa-check-circle me-1"></i> Resuelto
+                    <i class="fas fa-check-circle me-1"></i> {% trans "Resuelto" %}
                 </div>
                 {% endif %}
 
@@ -61,7 +62,7 @@
 
                     <div class="d-flex align-items-center mb-4">
                         <div class="me-3">
-                            <span class="text-muted small d-block">Dificultad</span>
+                            <span class="text-muted small d-block">{% trans "Dificultad" %}</span>
                             <div class="d-flex gap-1 mt-1">
                                 {% for i in "12345" %}
                                 <div style="width: 12px; height: 4px; border-radius: 2px;"
@@ -71,23 +72,23 @@
                             </div>
                         </div>
                         <div class="ms-auto text-end">
-                            <span class="text-muted small d-block">Puntos</span>
+                            <span class="text-muted small d-block">{% trans "Puntos" %}</span>
                             <span class="fw-bold text-primary">{{ challenge.points }}</span>
                         </div>
                     </div>
-                    Creado por {{ challenge.created_by.username }}
+                    {% trans "Creado por" %} {{ challenge.created_by.username }}
 
 
                     <a href="{% url 'challenge_detail' challenge.pk %}"
                         class="btn {% if challenge.id in solved_challenges %}btn-outline-primary{% else %}btn-primary{% endif %} w-100 py-2 fw-bold">
-                        {% if challenge.id in solved_challenges %}Ver Detalles{% else %}Intentar Reto{% endif %}
+                        {% if challenge.id in solved_challenges %}{% trans "Ver Detalles" %}{% else %}{% trans "Intentar Reto" %}{% endif %}
                     </a>
                 </div>
             </div>
         </div>
         {% empty %}
         <div class="col-12 text-center py-5">
-            <h3 class="text-muted">No hay retos disponibles en este momento.</h3>
+            <h3 class="text-muted">{% trans "No hay retos disponibles en este momento." %}</h3>
         </div>
         {% endfor %}
     </div>

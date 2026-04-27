@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static i18n %}
 
-{% block title %}Anuncios — CyberLearn{% endblock %}
+{% block title %}{% trans "Anuncios" %} — CyberLearn{% endblock %}
 
 {% block content %}
 <div class="announcements-page">
@@ -13,19 +13,19 @@
                 <svg viewBox="0 0 24 24"><path d="M22 17H2a3 3 0 0 0 3-3V9a7 7 0 0 1 14 0v5a3 3 0 0 0 3 3zm-8.27 4a2 2 0 0 1-3.46 0"/></svg>
             </div>
             <div>
-                <h2>Anuncios</h2>
-                <p>Comunicados del sector de ciberseguridad</p>
+                <h2>{% trans "Anuncios" %}</h2>
+                <p>{% trans "Comunicados del sector de ciberseguridad" %}</p>
             </div>
             <div class="live-badge">
                 <div class="dot"></div>
-                EN LÍNEA
+                {% trans "EN LÍNEA" %}
             </div>
         </div>
 
         {% if user.role == 'INSTRUCTOR' or user.role == 'ADMIN' %}
         <a href="{% url 'announcement_create' %}" class="btn-create-announcement">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Nuevo comunicado
+            {% trans "Nuevo comunicado" %}
         </a>
         {% endif %}
     </div>
@@ -38,12 +38,12 @@
             <!-- Card header: author info -->
             <div class="card-header">
                 <div class="author-info">
-                    <img src="{% if announcement.author.avatar %}{{ announcement.author.avatar.url }}{% else %}{% static 'img/logo.png' %}{% endif %}" alt="Avatar" class="author-avatar">
+                    <img src="{% if announcement.author.avatar %}{{ announcement.author.avatar.url }}{% else %}{% static 'img/logo.png' %}{% endif %}" alt="{% trans 'Avatar' %}" class="author-avatar">
                     <div class="author-meta">
                         <h4>{{ announcement.author.first_name|default:announcement.author.username }} {{ announcement.author.last_name }}</h4>
                         <p class="author-role">
                             <span class="role-tag">{{ announcement.author.get_role_display }}</span>
-                            {{ announcement.created_at|timesince }} atrás
+                            {% blocktrans with timesince=announcement.created_at|timesince %}{{ timesince }} atrás{% endblocktrans %}
                         </p>
                     </div>
                 </div>
@@ -64,32 +64,32 @@
             <div class="card-footer">
                 <div class="interaction-bar">
                     <div class="stats">
-                        <span class="stat-item" title="Reacciones">
+                        <span class="stat-item" title="{% trans 'Reacciones' %}">
                             <svg width="15" height="15" fill="currentColor" viewBox="0 0 16 16"><path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/></svg>
                             <span id="like-count-{{ announcement.id }}">{{ announcement.like_count }}</span>
                         </span>
-                        <span class="stat-item" title="Comentarios">
+                        <span class="stat-item" title="{% trans 'Comentarios' %}">
                             <svg width="15" height="15" fill="currentColor" viewBox="0 0 16 16"><path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/></svg>
                             <span id="comment-count-{{ announcement.id }}">{{ announcement.comments.count }}</span>
                         </span>
-                        <span class="stat-item" title="Lecturas">
+                        <span class="stat-item" title="{% trans 'Lecturas' %}">
                             <svg width="15" height="15" fill="currentColor" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/></svg>
                             <span id="read-count-{{ announcement.id }}">{{ announcement.read_count }}</span>
                         </span>
                     </div>
                     <span class="read-by-info">
-                        Publicado por {{ announcement.author.first_name|default:announcement.author.username }}
+                        {% trans "Publicado por" %} {{ announcement.author.first_name|default:announcement.author.username }}
                     </span>
                 </div>
 
                 <div class="action-buttons">
                     <button onclick="toggleReaction({{ announcement.id }})" class="action-btn btn-like {% if announcement.id in reacted_announcement_ids %}active{% endif %}" id="react-btn-{{ announcement.id }}">
                         <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73z"/></svg>
-                        Me gusta
+                        {% trans "Me gusta" %}
                     </button>
                     <button onclick="toggleRead({{ announcement.id }})" class="action-btn {% if announcement.id in read_announcement_ids %}active{% endif %}" id="read-btn-{{ announcement.id }}">
                         <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 2.354 7.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z"/></svg>
-                        {% if announcement.id in read_announcement_ids %}Leído{% else %}Marcar como leído{% endif %}
+                        {% if announcement.id in read_announcement_ids %}{% trans "Leído" %}{% else %}{% trans "Marcar como leído" %}{% endif %}
                     </button>
                 </div>
             </div>
@@ -103,7 +103,7 @@
                         <div class="comment-bubble">
                             <div class="comment-user">{{ comment.user.first_name|default:comment.user.username }}</div>
                             <div class="comment-text">{{ comment.text }}</div>
-                            <div class="comment-date">{{ comment.created_at|timesince }} atrás</div>
+                            <div class="comment-date">{% blocktrans with timesince=comment.created_at|timesince %}{{ timesince }} atrás{% endblocktrans %}</div>
                         </div>
                     </div>
                     {% endfor %}
@@ -111,7 +111,7 @@
                 
                 <div class="comment-input-container">
                     <img src="{% if user.avatar %}{{ user.avatar.url }}{% else %}{% static 'img/logo.png' %}{% endif %}" alt="" class="comment-avatar">
-                    <input type="text" class="comment-input" placeholder="Escribe un comentario..." id="comment-input-{{ announcement.id }}" onkeypress="if(event.keyCode==13) addComment({{ announcement.id }})">
+                    <input type="text" class="comment-input" placeholder="{% trans 'Escribe un comentario...' %}" id="comment-input-{{ announcement.id }}" onkeypress="if(event.keyCode==13) addComment({{ announcement.id }})">
                     <button class="comment-send-btn" onclick="addComment({{ announcement.id }})">
                         <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/></svg>
                     </button>
@@ -123,8 +123,8 @@
             <div class="empty-icon">
                 <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 17H2a3 3 0 0 0 3-3V9a7 7 0 0 1 14 0v5a3 3 0 0 0 3 3zm-8.27 4a2 2 0 0 1-3.46 0" stroke="#5A6480"/></svg>
             </div>
-            <h3>No hay anuncios aún</h3>
-            <p>Los comunicados aparecerán aquí cuando un instructor los publique.</p>
+            <h3>{% trans "No hay anuncios aún" %}</h3>
+            <p>{% trans "Los comunicados aparecerán aquí cuando un instructor los publique." %}</p>
         </div>
         {% endfor %}
     </div>
@@ -158,10 +158,10 @@ function toggleRead(id) {
         const count = document.getElementById(`read-count-${id}`);
         if (data.status === 'read') {
             btn.classList.add('active');
-            btn.innerHTML = '<svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 2.354 7.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z"/></svg> Leído';
+            btn.innerHTML = '<svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 2.354 7.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z"/></svg> {% trans "Leído" %}';
         } else {
             btn.classList.remove('active');
-            btn.innerHTML = '<svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 2.354 7.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z"/></svg> Marcar como leído';
+            btn.innerHTML = '<svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 2.354 7.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z"/></svg> {% trans "Marcar como leído" %}';
         }
         count.innerText = data.count;
     });
@@ -176,7 +176,7 @@ function toggleReaction(id) {
     .then(data => {
         const btn = document.getElementById(`react-btn-${id}`);
         const count = document.getElementById(`like-count-${id}`);
-        if (data.status === 'reacted') {
+        if (data.status === 'added') {
             btn.classList.add('active');
         } else {
             btn.classList.remove('active');
@@ -202,21 +202,20 @@ function addComment(id) {
     .then(data => {
         if (data.status === 'success') {
             const list = document.getElementById(`comments-list-${id}`);
-            const div = document.createElement('div');
-            div.className = 'comment-item';
-            div.innerHTML = `
-                <img src="{% static 'img/logo.png' %}" alt="" class="comment-avatar">
-                <div class="comment-bubble">
-                    <div class="comment-user">${data.user}</div>
-                    <div class="comment-text">${data.text}</div>
-                    <div class="comment-date">Justo ahora</div>
+            const count = document.getElementById(`comment-count-${id}`);
+            const comment = `
+                <div class="comment-item">
+                    <img src="{% static 'img/logo.png' %}" alt="" class="comment-avatar">
+                    <div class="comment-bubble">
+                        <div class="comment-user">${data.user}</div>
+                        <div class="comment-text">${data.text}</div>
+                        <div class="comment-date">{% trans "ahora" %}</div>
+                    </div>
                 </div>
             `;
-            list.appendChild(div);
+            list.insertAdjacentHTML('beforeend', comment);
+            count.innerText = parseInt(count.innerText) + 1;
             input.value = '';
-            // Update comment count
-            const countEl = document.getElementById(`comment-count-${id}`);
-            countEl.innerText = parseInt(countEl.innerText) + 1;
         }
     });
 }

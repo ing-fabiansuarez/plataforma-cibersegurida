@@ -1,8 +1,9 @@
+{% load i18n %}
 <footer>
   <p><strong style="color:var(--white); font-family: 'Space Mono', monospace; font-size:13px;">CyberLearn</strong> &copy; 2026</p>
-  <p>Proyecto académico — Maestría en Gestión, Aplicación y Desarrollo de Software</p>
-  <p><a href="https://unab.edu.co" target="_blank">Universidad Autónoma de Bucaramanga</a></p>
-  <p style="margin-top:6px; font-size:11px; opacity:.5;">Elaborado por: Yamid Gabriel Gamba González</p>
+  <p>{% trans "Proyecto académico — Maestría en Gestión, Aplicación y Desarrollo de Software" %}</p>
+  <p><a href="https://unab.edu.co" target="_blank">{% trans "Universidad Autónoma de Bucaramanga" %}</a></p>
+  <p style="margin-top:6px; font-size:11px; opacity:.5;">{% trans "Elaborado por" %}: Yamid Gabriel Gamba González</p>
   <div class="divider"></div>
   <div class="footer-social">
     <a href="https://facebook.com" target="_blank" class="social-link" title="Facebook">

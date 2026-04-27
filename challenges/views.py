@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.conf import settings
+from django.utils.translation import gettext as _
 import json
 from .models import Challenge, Submission, StudentProgress, UserBadge, Badge
 from .forms import ChallengeForm, SubmissionForm, BadgeForm
@@ -25,7 +26,7 @@ def badge_create(request):
         form = BadgeForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Insignia creada con éxito.')
+            messages.success(request, _('Insignia creada con éxito.'))
             return redirect('instructor_badge_list')
     else:
         # Pre-poblar si viene de un reto
@@ -36,7 +37,7 @@ def badge_create(request):
         
         form = BadgeForm(initial={'conditions_json': json.dumps(initial_conditions)})
         
-    return render(request, 'challenges/instructor/badge_form.html', {'form': form, 'title': 'Crear Insignia'})
+    return render(request, 'challenges/instructor/badge_form.html', {'form': form, 'title': _('Crear Insignia')})
 
 @login_required
 @user_passes_test(is_instructor)
@@ -46,11 +47,11 @@ def badge_edit(request, pk):
         form = BadgeForm(request.POST, instance=badge)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Insignia actualizada con éxito.')
+            messages.success(request, _('Insignia actualizada con éxito.'))
             return redirect('instructor_badge_list')
     else:
         form = BadgeForm(instance=badge)
-    return render(request, 'challenges/instructor/badge_form.html', {'form': form, 'title': 'Editar Insignia', 'badge': badge})
+    return render(request, 'challenges/instructor/badge_form.html', {'form': form, 'title': _('Editar Insignia'), 'badge': badge})
 
 @login_required
 @user_passes_test(is_instructor)
@@ -58,7 +59,7 @@ def badge_delete(request, pk):
     badge = get_object_or_404(Badge, pk=pk)
     if request.method == 'POST':
         badge.delete()
-        messages.success(request, 'Insignia eliminada con éxito.')
+        messages.success(request, _('Insignia eliminada con éxito.'))
         return redirect('instructor_badge_list')
     return render(request, 'challenges/instructor/badge_confirm_delete.html', {'badge': badge})
 from .badges import BadgeEvaluator
@@ -84,11 +85,11 @@ def challenge_create(request):
             raw_flag = form.cleaned_data.get('flag_raw')
             challenge.set_flag(raw_flag)
             challenge.save()
-            messages.success(request, 'Reto creado con éxito.')
+            messages.success(request, _('Reto creado con éxito.'))
             return redirect('instructor_challenge_list')
     else:
         form = ChallengeForm()
-    return render(request, 'challenges/instructor/challenge_form.html', {'form': form, 'title': 'Crear Reto'})
+    return render(request, 'challenges/instructor/challenge_form.html', {'form': form, 'title': _('Crear Reto')})
 
 @login_required
 @user_passes_test(is_instructor)
@@ -97,7 +98,7 @@ def challenge_edit(request, pk):
     
     # Solo el creador o un superusuario puede editar
     if challenge.created_by != request.user and not request.user.is_superuser:
-        messages.error(request, 'No tienes permiso para editar este reto porque fue creado por otro instructor.')
+        messages.error(request, _('No tienes permiso para editar este reto porque fue creado por otro instructor.'))
         return redirect('instructor_challenge_list')
 
     if request.method == 'POST':
@@ -107,17 +108,17 @@ def challenge_edit(request, pk):
             if form.cleaned_data.get('flag_raw'):
                 challenge.set_flag(form.cleaned_data.get('flag_raw'))
             challenge.save()
-            messages.success(request, 'Reto actualizado con éxito.')
+            messages.success(request, _('Reto actualizado con éxito.'))
             return redirect('instructor_challenge_list')
     else:
         # We don't want to show the flag hash in the raw field
         form = ChallengeForm(instance=challenge)
         form.fields['flag_raw'].required = False
-        form.fields['flag_raw'].help_text = "Deja en blanco para no cambiar la flag."
+        form.fields['flag_raw'].help_text = _("Deja en blanco para no cambiar la flag.")
         
     return render(request, 'challenges/instructor/challenge_form.html', {
         'form': form, 
-        'title': 'Editar Reto',
+        'title': _('Editar Reto'),
         'challenge': challenge
     })
 
@@ -128,7 +129,7 @@ def instructor_challenge_detail(request, pk):
     
     # Solo el creador o un superusuario puede ver los detalles internos
     if challenge.created_by != request.user and not request.user.is_superuser:
-        messages.error(request, 'No tienes permiso para ver los detalles de este reto.')
+        messages.error(request, _('No tienes permiso para ver los detalles de este reto.'))
         return redirect('instructor_challenge_list')
 
     submissions = Submission.objects.filter(challenge=challenge).select_related('user').order_by('-solved_at')
@@ -149,12 +150,12 @@ def challenge_delete(request, pk):
     
     # Solo el creador o un superusuario puede eliminar
     if challenge.created_by != request.user and not request.user.is_superuser:
-        messages.error(request, 'No tienes permiso para eliminar este reto.')
+        messages.error(request, _('No tienes permiso para eliminar este reto.'))
         return redirect('instructor_challenge_list')
 
     if request.method == 'POST':
         challenge.delete()
-        messages.success(request, 'Reto eliminado con éxito.')
+        messages.success(request, _('Reto eliminado con éxito.'))
         return redirect('instructor_challenge_list')
     return render(request, 'challenges/instructor/challenge_confirm_delete.html', {'challenge': challenge})
 

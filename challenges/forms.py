@@ -1,12 +1,13 @@
 from django import forms
 from .models import Challenge, Badge
+from django.utils.translation import gettext_lazy as _
 import json
 
 class ChallengeForm(forms.ModelForm):
     flag_raw = forms.CharField(
-        label="Flag (Texto Plano)",
+        label=_("Flag (Texto Plano)"),
         widget=forms.TextInput(attrs={'placeholder': 'CTF{mi_flag_secreta}'}),
-        help_text="La flag será hasheada automáticamente antes de guardarse."
+        help_text=_("La flag será hasheada automáticamente antes de guardarse.")
     )
 
     class Meta:
@@ -22,7 +23,7 @@ class ChallengeForm(forms.ModelForm):
 
 class BadgeForm(forms.ModelForm):
     conditions_json = forms.CharField(
-        label="Lógica de Desbloqueo",
+        label=_("Lógica de Desbloqueo"),
         widget=forms.HiddenInput(),
         required=False
     )
@@ -35,10 +36,10 @@ class BadgeForm(forms.ModelForm):
             'prerequisites'
         ]
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: Hacker Novato'}),
-            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Describe qué logros otorga esta insignia...'}),
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Ej: Hacker Novato')}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': _('Describe qué logros otorga esta insignia...')}),
             'category': forms.Select(attrs={'class': 'form-select'}),
-            'subcategory': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ej: Web, Forensics...'}),
+            'subcategory': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Ej: Web, Forensics...')}),
             'level': forms.NumberInput(attrs={'class': 'form-control'}),
             'rarity': forms.Select(attrs={'class': 'form-select'}),
             'icon_url': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'https://ejemplo.com/icono.png'}),
@@ -58,7 +59,7 @@ class BadgeForm(forms.ModelForm):
         try:
             return json.loads(data)
         except json.JSONDecodeError:
-            raise forms.ValidationError("El formato JSON no es válido.")
+            raise forms.ValidationError(_("El formato JSON no es válido."))
 
     def save(self, commit=True):
         instance = super().save(commit=False)
@@ -70,6 +71,6 @@ class BadgeForm(forms.ModelForm):
 
 class SubmissionForm(forms.Form):
     flag = forms.CharField(
-        label="Introduce la Flag",
+        label=_("Introduce la Flag"),
         widget=forms.TextInput(attrs={'placeholder': 'CTF{...}', 'class': 'form-control'})
     )

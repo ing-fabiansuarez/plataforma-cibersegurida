@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from .models import Announcement, AnnouncementRead, Comment, Reaction
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
+from django.utils.translation import gettext as _
 
 class AnnouncementListView(LoginRequiredMixin, ListView):
     model = Announcement
@@ -56,9 +57,9 @@ def toggle_reaction(request, pk):
     reaction, created = Reaction.objects.get_or_create(user=request.user, announcement=announcement)
     if not created:
         reaction.delete()
-        status = 'unreacted'
+        status = 'removed'
     else:
-        status = 'reacted'
+        status = 'added'
     return JsonResponse({'status': status, 'count': announcement.reactions.count()})
 
 @login_required
@@ -74,4 +75,4 @@ def add_comment(request, pk):
             'text': comment.text,
             'date': comment.created_at.strftime('%Y-%m-%d %H:%M')
         })
-    return JsonResponse({'status': 'error'}, status=400)
+    return JsonResponse({'status': 'error', 'message': _('El comentario no puede estar vacío.')}, status=400)

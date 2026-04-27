@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Ingresar — CyberLearn{% endblock %}
+{% block title %}<span data-translate="Ingresar">Ingresar</span> — CyberLearn{% endblock %}
 
 {% block content %}
 <div class="auth-wrapper">
@@ -16,8 +16,8 @@
                                 <div class="hex-inner"></div>
                             </div>
                         </div>
-                        <h2 class="auth-title-pro h3 fw-bold mb-1">Inicia Sesión</h2>
-                        <p class="auth-subtitle-pro text-muted small">Terminal de Acceso Seguro v2.4</p>
+                        <h2 class="auth-title-pro h3 fw-bold mb-1" data-translate="Inicia Sesión">Inicia Sesión</h2>
+                        <p class="auth-subtitle-pro text-muted small" data-translate="Terminal de Acceso Seguro v2.4">Terminal de Acceso Seguro v2.4</p>
                     </div>
 
                     <div class="auth-body-pro p-4">
@@ -26,7 +26,7 @@
                                 <div class="d-flex align-items-center">
                                     <i class="fas fa-triangle-exclamation me-3 fs-4"></i>
                                     <div class="flex-grow-1">
-                                        <div class="fw-bold small">Error de Autenticación</div>
+                                        <div class="fw-bold small" data-translate="Error de Autenticación">Error de Autenticación</div>
                                         {% for error in form.non_field_errors %}
                                             <div class="x-small">{{ error }}</div>
                                         {% endfor %}
@@ -42,12 +42,12 @@
                             {% csrf_token %}
                             
                             <div class="input-container-pro mb-3">
-                                <label class="label-pro">Usuario</label>
+                                <label class="label-pro" data-translate="Usuario">Usuario</label>
                                 <div class="input-wrapper-pro {% if form.username.errors %}is-invalid{% endif %}">
                                     <span class="input-icon-pro"><i class="fas fa-at"></i></span>
                                     <input type="text" name="username" id="id_username" required 
                                            class="input-field-pro"
-                                           placeholder="nombre_de_usuario"
+                                           placeholder="nombre_de_usuario" data-translate-placeholder="nombre_de_usuario"
                                            value="{{ form.username.value|default:'' }}">
                                 </div>
                                 {% if form.username.errors %}
@@ -59,8 +59,8 @@
 
                             <div class="input-container-pro mb-4">
                                 <div class="d-flex justify-content-between align-items-center mb-1">
-                                    <label class="label-pro">Contraseña</label>
-                                    <a href="#" class="forgot-link-pro">¿Olvidaste tu clave?</a>
+                                    <label class="label-pro" data-translate="Contraseña">Contraseña</label>
+                                    <a href="#" class="forgot-link-pro" data-translate="¿Olvidaste tu clave?">¿Olvidaste tu clave?</a>
                                 </div>
                                 <div class="input-wrapper-pro {% if form.password.errors %}is-invalid{% endif %}">
                                     <span class="input-icon-pro"><i class="fas fa-lock"></i></span>
@@ -80,7 +80,7 @@
 
                             <button type="submit" class="btn-submit-pro w-100 mb-4">
                                 <span class="btn-content">
-                                    <span class="btn-text">ACCEDER AL SISTEMA</span>
+                                    <span class="btn-text" data-translate="ACCEDER AL SISTEMA">ACCEDER AL SISTEMA</span>
                                     <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
                                 </span>
                                 <div class="btn-shine"></div>
@@ -89,8 +89,8 @@
 
                         <div class="auth-footer-pro text-center pt-3">
                             <p class="small text-muted mb-0">
-                                ¿No tienes acceso? 
-                                <a href="{% url 'signup' %}" class="signup-link-pro">Crea una cuenta</a>
+                                <span data-translate="¿No tienes acceso?">¿No tienes acceso?</span> 
+                                <a href="{% url 'signup' %}" class="signup-link-pro" data-translate="Crea una cuenta">Crea una cuenta</a>
                             </p>
                         </div>
                     </div>
@@ -99,7 +99,7 @@
                 <div class="security-note-pro text-center mt-4">
                     <p class="x-small text-muted">
                         <i class="fas fa-shield-halved me-1 text-accent"></i> 
-                        NODO DE SEGURIDAD ACTIVADO
+                        <span data-translate="NODO DE SEGURIDAD ACTIVADO">NODO DE SEGURIDAD ACTIVADO</span>
                     </p>
                 </div>
             </div>

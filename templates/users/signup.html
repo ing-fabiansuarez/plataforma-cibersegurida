@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Crear Cuenta — CyberLearn{% endblock %}
+{% block title %}<span data-translate="Crear Cuenta">Crear Cuenta</span> — CyberLearn{% endblock %}
 
 {% block content %}
 <div class="auth-wrapper">
@@ -16,8 +16,8 @@
                                 <div class="hex-inner"></div>
                             </div>
                         </div>
-                        <h2 class="auth-title-pro h3 fw-bold mb-1">Únete a la Academia</h2>
-                        <p class="auth-subtitle-pro text-muted small">Crea tu terminal de estudiante y empieza a hackear</p>
+                        <h2 class="auth-title-pro h3 fw-bold mb-1" data-translate="Únete a la Academia">Únete a la Academia</h2>
+                        <p class="auth-subtitle-pro text-muted small" data-translate="Crea tu terminal de estudiante y empieza a hackear">Crea tu terminal de estudiante y empieza a hackear</p>
                     </div>
 
                     <div class="auth-body-pro p-4 pt-0">
@@ -26,7 +26,7 @@
                                 <div class="d-flex align-items-center">
                                     <i class="fas fa-triangle-exclamation me-3 fs-4"></i>
                                     <div class="flex-grow-1">
-                                        <div class="fw-bold small">Error en el Registro</div>
+                                        <div class="fw-bold small" data-translate="Error en el Registro">Error en el Registro</div>
                                         {% for error in form.non_field_errors %}
                                             <div class="x-small">{{ error }}</div>
                                         {% endfor %}
@@ -82,7 +82,7 @@
 
                             <button type="submit" class="btn-submit-pro w-100 mt-4 mb-3">
                                 <span class="btn-content">
-                                    <span class="btn-text">REGISTRARSE COMO ESTUDIANTE</span>
+                                    <span class="btn-text" data-translate="REGISTRARSE COMO ESTUDIANTE">REGISTRARSE COMO ESTUDIANTE</span>
                                     <span class="btn-arrow"><i class="fas fa-rocket"></i></span>
                                 </span>
                                 <div class="btn-shine"></div>
@@ -91,8 +91,8 @@
 
                         <div class="auth-footer-pro text-center pt-3 border-top border-light-subtle">
                             <p class="small text-muted mb-0">
-                                ¿Ya tienes una cuenta operativa? 
-                                <a href="{% url 'login' %}" class="signup-link-pro">Inicia sesión</a>
+                                <span data-translate="¿Ya tienes una cuenta operativa?">¿Ya tienes una cuenta operativa?</span> 
+                                <a href="{% url 'login' %}" class="signup-link-pro" data-translate="Inicia sesión">Inicia sesión</a>
                             </p>
                         </div>
                     </div>

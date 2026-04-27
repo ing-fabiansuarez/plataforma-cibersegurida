@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
 <div class="container py-5">
@@ -10,14 +11,14 @@
                         <div class="hex-badge me-3">
                             <i class="fas fa-terminal"></i>
                         </div>
-                        <h1 class="display-5 fw-bold text-gradient-pro mb-0">Panel de Instructor</h1>
+                        <h1 class="display-5 fw-bold text-gradient-pro mb-0">{% trans "Panel de Instructor" %}</h1>
                     </div>
-                    <p class="text-muted-pro lead mb-0">Arquitectura y despliegue de desafíos tácticos de ciberseguridad.</p>
+                    <p class="text-muted-pro lead mb-0">{% trans "Arquitectura y despliegue de desafíos tácticos de ciberseguridad." %}</p>
                 </div>
                 <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
                     <a href="{% url 'challenge_create' %}" class="btn-create-pro">
                         <span class="btn-content">
-                            <i class="fas fa-plus-circle me-2"></i> Nuevo Desafío
+                            <i class="fas fa-plus-circle me-2"></i> {% trans "Nuevo Desafío" %}
                         </span>
                         <span class="btn-shine"></span>
                     </a>
@@ -33,7 +34,7 @@
                         <i class="fas fa-shield-alt"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-label">Total Retos</span>
+                        <span class="stat-label">{% trans "Total Retos" %}</span>
                         <span class="stat-value">{{ challenges.count }}</span>
                     </div>
                 </div>
@@ -44,8 +45,8 @@
                         <i class="fas fa-globe"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-label">Publicados</span>
-                        <span class="stat-value">{{ challenges|dictsort:"is_published"|reverse|slice:":1"|first|yesno:"-" }}{{ challenges.filter.is_published.count|default:0 }}</span>
+                        <span class="stat-label">{% trans "Publicados" %}</span>
+                        <span class="stat-value">{{ challenges.filter.is_published.count|default:0 }}</span>
                     </div>
                 </div>
             </div>
@@ -55,7 +56,7 @@
                         <i class="fas fa-users"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-label">Soluciones Totales</span>
+                        <span class="stat-label">{% trans "Soluciones Totales" %}</span>
                         <span class="stat-value">{% with total_solves=0 %}{% for c in challenges %}{% with total_solves=total_solves|add:c.submission_set.count %}{% endwith %}{% endfor %}{{ total_solves }}{% endwith %}</span>
                     </div>
                 </div>
@@ -80,13 +81,13 @@
                                     <i class="fas fa-ellipsis-v"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 animate__animated animate__fadeIn animate__faster">
-                                    <li><a class="dropdown-item" href="{% url 'challenge_edit' challenge.pk %}"><i class="fas fa-edit me-2 text-primary"></i> Editar</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'challenge_edit' challenge.pk %}"><i class="fas fa-edit me-2 text-primary"></i> {% trans "Editar" %}</a></li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item text-danger" href="{% url 'challenge_delete' challenge.pk %}"><i class="fas fa-trash-alt me-2"></i> Eliminar</a></li>
+                                    <li><a class="dropdown-item text-danger" href="{% url 'challenge_delete' challenge.pk %}"><i class="fas fa-trash-alt me-2"></i> {% trans "Eliminar" %}</a></li>
                                 </ul>
                             </div>
                             {% else %}
-                            <span class="lock-badge" title="Solo lectura">
+                            <span class="lock-badge" title="{% trans 'Solo lectura' %}">
                                 <i class="fas fa-lock"></i>
                             </span>
                             {% endif %}
@@ -112,7 +113,7 @@
 
                             <div class="metrics-container mb-4">
                                 <div class="metric-item">
-                                    <span class="metric-label">Dificultad</span>
+                                    <span class="metric-label">{% trans "Dificultad" %}</span>
                                     <div class="difficulty-bars">
                                         {% for i in "12345" %}
                                         <div class="bar {% if forloop.counter <= challenge.difficulty %}active{% endif %}"></div>
@@ -120,7 +121,7 @@
                                     </div>
                                 </div>
                                 <div class="metric-item text-end">
-                                    <span class="metric-label">Puntos</span>
+                                    <span class="metric-label">{% trans "Puntos" %}</span>
                                     <span class="points-value">{{ challenge.points }}</span>
                                 </div>
                             </div>
@@ -128,11 +129,11 @@
                             <div class="card-footer-pro">
                                 <div class="status-indicator {% if challenge.is_published %}status-online{% else %}status-offline{% endif %}">
                                     <span class="status-dot"></span>
-                                    {{ challenge.is_published|yesno:"Publicado,Borrador" }}
+                                    {{ challenge.is_published|yesno:_("Publicado,Borrador") }}
                                 </div>
                                 <div class="solves-count">
                                     <i class="fas fa-bolt me-1 text-gold"></i>
-                                    {{ challenge.submission_set.count }} solves
+                                    {{ challenge.submission_set.count }} {% trans "soluciones" %}
                                 </div>
                             </div>
                         </div>
@@ -146,12 +147,12 @@
                         <i class="fas fa-ghost"></i>
                         <div class="icon-ring"></div>
                     </div>
-                    <h3 class="fw-bold mb-3">Zona de Operaciones Vacía</h3>
+                    <h3 class="fw-bold mb-3">{% trans "Zona de Operaciones Vacía" %}</h3>
                     <p class="text-muted mb-4 mx-auto" style="max-width: 400px;">
-                        No se han detectado desafíos en tu sector. Inicia el despliegue de tu primer reto táctico.
+                        {% trans "No se han detectado desafíos en tu sector. Inicia el despliegue de tu primer reto táctico." %}
                     </p>
                     <a href="{% url 'challenge_create' %}" class="btn-create-pro mx-auto">
-                        <span class="btn-content">Crear Primer Reto</span>
+                        <span class="btn-content">{% trans "Crear Primer Reto" %}</span>
                         <span class="btn-shine"></span>
                     </a>
                 </div>

@@ -8,27 +8,228 @@
       </a>
       <div style="width: 1px; height: 20px; background: rgba(255,255,255,0.2); margin: 0 5px;"></div>
     {% endif %}
-    <span class="main-nav-welcome">Academia Gamificada de Ciberseguridad</span>
+    <span class="main-nav-welcome" data-translate="Academia Gamificada de Ciberseguridad">Academia Gamificada de Ciberseguridad</span>
   </div>
   <div class="auth-links">
+    <!-- Language Selector -->
+    <div class="language-selector-nav">
+      <button class="lang-btn" onclick="toggleLanguageSelector()" data-translate-title="Cambiar idioma">
+        <i class="fas fa-globe"></i>
+        <span class="lang-current">ES</span>
+        <i class="fas fa-chevron-down lang-arrow"></i>
+      </button>
+      <div class="lang-dropdown" id="langDropdown">
+        <button class="lang-option" onclick="changeLanguage('es')">
+          <span class="flag">🇪🇸</span>
+          <span class="lang-name">Español</span>
+        </button>
+        <button class="lang-option" onclick="changeLanguage('en')">
+          <span class="flag">🇬🇧</span>
+          <span class="lang-name">English</span>
+        </button>
+      </div>
+    </div>
     <!-- Theme toggle -->
-    <button class="theme-toggle" id="theme-toggle" title="Cambiar tema" onclick="toggleTheme()">
+    <button class="theme-toggle" id="theme-toggle" title="Cambiar tema" onclick="toggleTheme()" data-translate-title="Cambiar tema">
       <svg id="icon-sun" viewBox="0 0 16 16" style="display:none;"><path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/></svg>
       <svg id="icon-moon" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/></svg>
     </button>
 
     {% if user.is_authenticated %}
       <a href="{% url 'user_profile' %}" class="btn btn-ghost" style="display: flex; align-items: center; gap: 5px;">
-        <i class="fas fa-user-circle"></i> Mi Perfil
+        <i class="fas fa-user-circle"></i> <span data-translate="Mi Perfil">Mi Perfil</span>
       </a>
-      <span style="color: white; font-size: 13px; margin-right: 10px;">Hola, {{ user.first_name|default:user.username }} ({{ user.get_role_display }})</span>
+      <span style="color: white; font-size: 13px; margin-right: 10px;"><span data-translate="Hola">Hola</span>, {{ user.first_name|default:user.username }} ({{ user.get_role_display }})</span>
       <form action="{% url 'logout' %}" method="post" style="display: inline;">
         {% csrf_token %}
-        <button type="submit" class="btn btn-ghost">Salir</button>
+        <button type="submit" class="btn btn-ghost" data-translate="Salir">Salir</button>
       </form>
     {% else %}
-      <a href="{% url 'login' %}" class="btn btn-ghost">Ingresar</a>
-      <a href="{% url 'signup' %}" class="btn btn-primary">Registrarse</a>
+      <a href="{% url 'login' %}" class="btn btn-ghost" data-translate="Ingresar">Ingresar</a>
+      <a href="{% url 'signup' %}" class="btn btn-primary" data-translate="Registrarse">Registrarse</a>
     {% endif %}
   </div>
 </nav>
+
+<style>
+/* Language Selector Styles */
+.language-selector-nav {
+  position: relative;
+  margin-right: 15px;
+}
+
+.lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.lang-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.lang-current {
+  font-family: var(--font-head);
+  font-weight: 700;
+}
+
+.lang-arrow {
+  font-size: 10px;
+  transition: transform 0.3s ease;
+}
+
+.lang-btn.active .lang-arrow {
+  transform: rotate(180deg);
+}
+
+.lang-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(20px);
+  min-width: 160px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.lang-dropdown.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+[data-theme="dark"] .lang-dropdown {
+  background: var(--navy);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.lang-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  background: none;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 8px;
+  margin: 4px;
+}
+
+.lang-option:hover {
+  background: rgba(213, 28, 0, 0.1);
+  color: var(--accent);
+}
+
+.lang-option:first-child {
+  margin-top: 8px;
+}
+
+.lang-option:last-child {
+  margin-bottom: 8px;
+}
+
+.flag {
+  font-size: 18px;
+}
+
+.lang-name {
+  font-weight: 600;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .language-selector-nav {
+    margin-right: 10px;
+  }
+  
+  .lang-btn {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+  
+  .lang-dropdown {
+    min-width: 140px;
+  }
+  
+  .lang-option {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+}
+</style>
+
+<script>
+function toggleLanguageSelector() {
+  const dropdown = document.getElementById('langDropdown');
+  const button = document.querySelector('.lang-btn');
+  
+  if (dropdown.classList.contains('show')) {
+    dropdown.classList.remove('show');
+    button.classList.remove('active');
+  } else {
+    dropdown.classList.add('show');
+    button.classList.add('active');
+  }
+}
+
+function changeLanguage(lang) {
+  // Update current language display
+  const currentLangSpan = document.querySelector('.lang-current');
+  currentLangSpan.textContent = lang.toUpperCase();
+  
+  // Use the existing i18n system
+  if (window.i18n) {
+    window.i18n.changeLanguage(lang);
+  }
+  
+  // Close dropdown
+  toggleLanguageSelector();
+  
+  // Save preference
+  localStorage.setItem('cyberlearn-language', lang);
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(event) {
+  const selector = document.querySelector('.language-selector-nav');
+  if (!selector.contains(event.target)) {
+    const dropdown = document.getElementById('langDropdown');
+    const button = document.querySelector('.lang-btn');
+    dropdown.classList.remove('show');
+    button.classList.remove('active');
+  }
+});
+
+// Set initial language display
+document.addEventListener('DOMContentLoaded', function() {
+  const savedLang = localStorage.getItem('cyberlearn-language') || 'es';
+  const currentLangSpan = document.querySelector('.lang-current');
+  if (currentLangSpan) {
+    currentLangSpan.textContent = savedLang.toUpperCase();
+  }
+});
+</script>

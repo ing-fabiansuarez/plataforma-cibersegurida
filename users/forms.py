@@ -1,11 +1,12 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import User
+from django.utils.translation import gettext_lazy as _
 
 class StudentSignupForm(UserCreationForm):
-    first_name = forms.CharField(label="Nombre", max_length=30, required=True)
-    last_name = forms.CharField(label="Apellido", max_length=30, required=True)
-    email = forms.EmailField(label="Correo electrónico", required=True)
+    first_name = forms.CharField(label=_("Nombre"), max_length=30, required=True)
+    last_name = forms.CharField(label=_("Apellido"), max_length=30, required=True)
+    email = forms.EmailField(label=_("Correo electrónico"), required=True)
 
     class Meta(UserCreationForm.Meta):
         model = User

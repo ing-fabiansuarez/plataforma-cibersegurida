@@ -1,32 +1,33 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Nuevo Comunicado — CyberLearn{% endblock %}
+{% block title %}{% trans "Nuevo Comunicado" %} — CyberLearn{% endblock %}
 
 {% block content %}
 <div class="create-form-card">
-    <h1>Nuevo Comunicado</h1>
+    <h1>{% trans "Nuevo Comunicado" %}</h1>
     
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         
         <div class="form-group">
-            <label for="id_title">Título del comunicado</label>
-            <input type="text" name="title" id="id_title" required placeholder="Ej: Alerta de vulnerabilidad detectada">
+            <label for="id_title">{% trans "Título del comunicado" %}</label>
+            <input type="text" name="title" id="id_title" required placeholder="{% trans 'Ej: Alerta de vulnerabilidad detectada' %}">
         </div>
 
         <div class="form-group">
-            <label for="id_content">Contenido</label>
-            <textarea name="content" id="id_content" rows="10" required placeholder="Redacte el mensaje para los estudiantes..."></textarea>
+            <label for="id_content">{% trans "Contenido" %}</label>
+            <textarea name="content" id="id_content" rows="10" required placeholder="{% trans 'Redacte el mensaje para los estudiantes...' %}"></textarea>
         </div>
 
         <div class="form-group">
-            <label for="id_image">Imagen (opcional)</label>
+            <label for="id_image">{% trans "Imagen (opcional)" %}</label>
             <input type="file" name="image" id="id_image" accept="image/*">
         </div>
 
         <div class="form-actions">
-            <button type="submit" class="btn-submit">Publicar comunicado</button>
-            <a href="{% url 'announcements_list' %}" class="btn-cancel">Cancelar</a>
+            <button type="submit" class="btn-submit">{% trans "Publicar comunicado" %}</button>
+            <a href="{% url 'announcements_list' %}" class="btn-cancel">{% trans "Cancelar" %}</a>
         </div>
     </form>
 </div>

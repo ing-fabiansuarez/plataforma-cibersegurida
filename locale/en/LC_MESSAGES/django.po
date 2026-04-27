@@ -1,0 +1,383 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-26 22:50-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Academia Gamificada de Ciberseguridad"
+msgstr "Gamified Cybersecurity Academy"
+
+msgid "Ingresar"
+msgstr "Login"
+
+msgid "Inicia Sesión"
+msgstr "Sign In"
+
+msgid "Terminal de Acceso Seguro v2.4"
+msgstr "Secure Access Terminal v2.4"
+
+msgid "Error de Autenticación"
+msgstr "Authentication Error"
+
+msgid "Usuario"
+msgstr "Username"
+
+msgid "nombre_de_usuario"
+msgstr "username"
+
+msgid "Contraseña"
+msgstr "Password"
+
+msgid "¿Olvidaste tu clave?"
+msgstr "Forgot your password?"
+
+msgid "ACCEDER AL SISTEMA"
+msgstr "ACCESS SYSTEM"
+
+msgid "¿No tienes acceso?"
+msgstr "Don't have access?"
+
+msgid "Crea una cuenta"
+msgstr "Create an account"
+
+msgid "NODO DE SEGURIDAD ACTIVADO"
+msgstr "SECURITY NODE ACTIVATED"
+
+msgid "Crear Cuenta"
+msgstr "Create Account"
+
+msgid "Únete a la Academia"
+msgstr "Join the Academy"
+
+msgid "Crea tu terminal de estudiante y empieza a hackear"
+msgstr "Create your student terminal and start hacking"
+
+msgid "Error en el Registro"
+msgstr "Registration Error"
+
+msgid "REGISTRARSE COMO ESTUDIANTE"
+msgstr "REGISTER AS STUDENT"
+
+msgid "¿Ya tienes una cuenta operativa?"
+msgstr "Already have an account?"
+
+msgid "Inicia sesión"
+msgstr "Sign in"
+
+msgid "Mi Perfil"
+msgstr "My Profile"
+
+msgid "Hola"
+msgstr "Hello"
+
+msgid "Salir"
+msgstr "Logout"
+
+msgid "Registrarse"
+msgstr "Sign Up"
+
+msgid "Panel de Instructor"
+msgstr "Instructor Dashboard"
+
+msgid "Arquitectura y despliegue de desafíos tácticos de ciberseguridad."
+msgstr "Architecture and deployment of tactical cybersecurity challenges."
+
+msgid "Nuevo Desafío"
+msgstr "New Challenge"
+
+msgid "Total Retos"
+msgstr "Total Challenges"
+
+msgid "Publicados"
+msgstr "Published"
+
+msgid "Soluciones Totales"
+msgstr "Total Solutions"
+
+msgid "Editar"
+msgstr "Edit"
+
+msgid "Eliminar"
+msgstr "Delete"
+
+msgid "Solo lectura"
+msgstr "Read only"
+
+msgid "Dificultad"
+msgstr "Difficulty"
+
+msgid "Puntos"
+msgstr "Points"
+
+msgid "Publicado,Borrador"
+msgstr "Published,Draft"
+
+msgid "soluciones"
+msgstr "solves"
+
+msgid "Zona de Operaciones Vacía"
+msgstr "Empty Operations Zone"
+
+msgid "No se han detectado desafíos en tu sector. Inicia el despliegue de tu primer reto táctico."
+msgstr "No challenges detected in your sector. Start deploying your first tactical challenge."
+
+msgid "Crear Primer Reto"
+msgstr "Create First Challenge"
+
+msgid "Panel"
+msgstr "Dashboard"
+
+msgid "Completa los detalles del desafío técnico para tus estudiantes."
+msgstr "Complete the technical challenge details for your students."
+
+msgid "Información Básica"
+msgstr "Basic Information"
+
+msgid "Título del Reto"
+msgstr "Challenge Title"
+
+msgid "Ejemplo"
+msgstr "Example"
+
+msgid "Categoría"
+msgstr "Category"
+
+msgid "Dificultad (1-5)"
+msgstr "Difficulty (1-5)"
+
+msgid "El Desafío"
+msgstr "The Challenge"
+
+msgid "Descripción / Instrucciones"
+msgstr "Description / Instructions"
+
+msgid "Usa Markdown para dar formato al contenido."
+msgstr "Use Markdown to format content."
+
+msgid "Flag del Reto"
+msgstr "Challenge Flag"
+
+msgid "Recompensa"
+msgstr "Reward"
+
+msgid "Puntos a Otorgar"
+msgstr "Points to Award"
+
+msgid "Publicar Reto"
+msgstr "Publish Challenge"
+
+msgid "Si está desactivado, el reto se guardará como borrador."
+msgstr "If disabled, the challenge will be saved as a draft."
+
+msgid "Cancelar"
+msgstr "Cancel"
+
+msgid "Guardar Reto"
+msgstr "Save Challenge"
+
+msgid "Proyecto académico — Maestría en Gestión, Aplicación y Desarrollo de Software"
+msgstr "Academic Project — Master in Management, Application and Software Development"
+
+msgid "Universidad Autónoma de Bucaramanga"
+msgstr "Autonomous University of Bucaramanga"
+
+msgid "Elaborado por"
+msgstr "Developed by"
+
+msgid "Spanish"
+msgstr "Spanish"
+
+msgid "English"
+msgstr "English"
+
+msgid "Semillero CHATS"
+msgstr "CHATS Seedbed"
+
+msgid "Semillero de Seguridad Informática"
+msgstr "Computer Security Seedbed"
+
+msgid "Ingeniería de Sistemas — Ciberseguridad, Hacking Ético, Análisis Forense, Tecnologías de la Información y SGSI."
+msgstr "Systems Engineering — Cybersecurity, Ethical Hacking, Forensic Analysis, Information Technologies and ISMS."
+
+msgid "Unirse ahora"
+msgstr "Join Now"
+
+msgid "Anuncios"
+msgstr "Announcements"
+
+msgid "Investigación Destacada"
+msgstr "Featured Research"
+
+msgid "Análisis del Vector de Ataque: Cryptojacking"
+msgstr "Attack Vector Analysis: Cryptojacking"
+
+#, python-format
+msgid "Los entornos digitales orientados a la Web han aportado un gran número de beneficios, sin embargo, han traído consigo múltiples amenazas como el llamado <strong>Cryptojacking</strong>."
+msgstr "Web-oriented digital environments have brought many benefits, however, they have also brought multiple threats such as so-called <strong>Cryptojacking</strong>."
+
+msgid "Generar políticas para minimizar la interacción en sitios web maliciosos."
+msgstr "Generate policies to minimize interaction with malicious websites."
+
+msgid "Estrategias de sensibilización mediante escenarios de prueba reales."
+msgstr "Awareness strategies through real test scenarios."
+
+msgid "Capacitaciones periódicas con evaluaciones sobre las temáticas tratadas."
+msgstr "Periodic training with evaluations on the topics covered."
+
+msgid "Auditorías periódicas y acciones correctivas según las oportunidades de mejora."
+msgstr "Periodic audits and corrective actions according to improvement opportunities."
+
+msgid "Nuestros Proyectos"
+msgstr "Our Projects"
+
+msgid "Adopción de Estrategia Zero Trust"
+msgstr "Zero Trust Strategy Adoption"
+
+msgid "Análisis descriptivo del enfoque arquitectónico de Zero Trust para impulsar su adopción como estrategia de ciberseguridad en organizaciones públicas y privadas."
+msgstr "Descriptive analysis of the Zero Trust architectural approach to drive its adoption as a cybersecurity strategy in public and private organizations."
+
+msgid "Gestión de Actas con Firma Electrónica"
+msgstr "Minutes Management with Electronic Signature"
+
+msgid "Plataforma para la gestión de actas de reunión usando firma electrónica para garantizar integridad y autenticidad."
+msgstr "Platform for meeting minutes management using electronic signature to guarantee integrity and authenticity."
+
+msgid "Análisis Malware Cryptojacking"
+msgstr "Cryptojacking Malware Analysis"
+
+msgid "Estudio descriptivo del vector de ataque del malware Cryptojacking en plataformas web y su impacto en el rendimiento."
+msgstr "Descriptive study of the Cryptojacking malware attack vector on web platforms and its impact on performance."
+
+msgid "Gamificación en Informática Forense"
+msgstr "Gamification in Computer Forensics"
+
+msgid "Videojuego para el aprendizaje de la fundamentación conceptual en Informática forense de manera interactiva."
+msgstr "Video game for learning conceptual foundations in Computer Forensics interactively."
+
+msgid "Nuestros Integrantes"
+msgstr "Our Members"
+
+msgid "Estudiantes Activos en el semillero"
+msgstr "Active Students in the seedbed"
+
+msgid "Ing. Sistemas"
+msgstr "Systems Eng."
+
+msgid "Score"
+msgstr "Score"
+
+msgid "Excelente desempeño en retos"
+msgstr "Excellent performance in challenges"
+
+msgid "Gran participación en el foro"
+msgstr "Great participation in the forum"
+
+msgid "\"Análisis descriptivo del vector de ataque del malware cryptojacking en plataformas web. Una experiencia enriquecedora en el semillero desde 2019.\""
+msgstr "\"Descriptive analysis of the cryptojacking malware attack vector on web platforms. An enriching experience in the seedbed since 2019.\""
+
+msgid "Estudiante 9 semestre / Ingeniería de Sistemas"
+msgstr "9th semester Student / Systems Engineering"
+
+msgid "Emergencias"
+msgstr "Emergencies"
+
+msgid "Registros activos"
+msgstr "Active records"
+
+msgid "Eventos"
+msgstr "Events"
+
+msgid "En bitácora"
+msgstr "In log"
+
+msgid "Observaciones"
+msgstr "Observations"
+
+msgid "Registradas"
+msgstr "Registered"
+
+msgid "Último usuario"
+msgstr "Last user"
+
+msgid "Sin actividad"
+msgstr "No activity"
+
+msgid "Forensics"
+msgstr "Forensics"
+
+msgid "Web"
+msgstr "Web"
+
+msgid "Reversing"
+msgstr "Reversing"
+
+msgid "Cryptography"
+msgstr "Cryptography"
+
+msgid "Pwn"
+msgstr "Pwn"
+
+msgid "Miscellaneous"
+msgstr "Miscellaneous"
+
+msgid "HTML or Markdown content"
+msgstr "HTML or Markdown content"
+
+msgid "[{\"text\": \"...\", \"cost_points\": 0}, ...]"
+msgstr "[{\"text\": \"...\", \"cost_points\": 0}, ...]"
+
+msgid "List of URLs to files"
+msgstr "List of URLs to files"
+
+msgid "Genially/Google Sites URL"
+msgstr "Genially/Google Sites URL"
+
+msgid "Habilidad"
+msgstr "Skill"
+
+msgid "Logro"
+msgstr "Achievement"
+
+msgid "Competitiva"
+msgstr "Competitive"
+
+msgid "Secreta"
+msgstr "Secret"
+
+msgid "Bronce"
+msgstr "Bronze"
+
+msgid "Plata"
+msgstr "Silver"
+
+msgid "Oro"
+msgstr "Gold"
+
+msgid "Platino"
+msgstr "Platinum"
+
+msgid "Común"
+msgstr "Common"
+
+msgid "Rara"
+msgstr "Rare"
+
+msgid "Épica"
+msgstr "Epic"
+
+msgid "Legendaria"
+msgstr "Legendary"
+
+msgid "Ej: web, crypto, etc."
+msgstr "e.g.: web, crypto, etc."
+
+msgid "JSON flexible: {\"type\": \"solve_count\", \"category\": \"web\", \"count\": 5}"
+msgstr "JSON flexible: {\"type\": \"solve_count\", \"category\": \"web\", \"count\": 5}"
