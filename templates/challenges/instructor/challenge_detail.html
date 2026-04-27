@@ -34,6 +34,9 @@
                         <a href="{% url 'challenge_edit' challenge.pk %}" class="btn btn-outline-primary btn-sm">
                             <i class="fas fa-edit me-2"></i> Editar este reto
                         </a>
+                        <a href="{% url 'badge_create' %}?challenge={{ challenge.pk }}" class="btn btn-outline-info btn-sm">
+                            <i class="fas fa-medal me-2"></i> Crear Insignia para este reto
+                        </a>
                     </div>
 
                     <p class="text-muted small mb-4">{{ challenge.description|truncatewords:30 }}</p>

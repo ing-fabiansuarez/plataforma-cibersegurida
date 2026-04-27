@@ -7,9 +7,9 @@
   <a href="/challenges/" {% if '/challenges/' in request.path and 'instructor' not in request.path and 'create' not in request.path %}class="active"{% endif %}>Retos</a>
   {% if user.is_authenticated and user.role == 'INSTRUCTOR' or user.is_superuser %}
     <a href="{% url 'instructor_challenge_list' %}" {% if 'instructor/challenges/' in request.path and 'create' not in request.path %}class="active"{% endif %}>Panel Instructor</a>
-   {% endif %}
+    <a href="{% url 'instructor_badge_list' %}" {% if 'instructor/badges/' in request.path %}class="active"{% endif %}><i class="fas fa-medal me-1"></i> Insignias</a>
+  {% endif %}
   <a href="#" class="has-tooltip pending-link" data-tooltip="Próximamente...">Encuestas</a>
-  <a href="#" class="has-tooltip pending-link" data-tooltip="Próximamente...">Insignias</a>
   <div class="dropdown">
     <a href="#">Documentos ▾</a>
     <div class="dropdown-menu">

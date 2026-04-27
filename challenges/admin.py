@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Challenge, Submission, Badge, StudentProgress
+from .models import Challenge, Submission, Badge, UserBadge, StudentProgress
 
 @admin.register(Challenge)
 class ChallengeAdmin(admin.ModelAdmin):
@@ -16,7 +16,28 @@ class SubmissionAdmin(admin.ModelAdmin):
 
 @admin.register(Badge)
 class BadgeAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description')
+    list_display = ('name', 'category', 'level', 'rarity', 'is_secret', 'points_awarded')
+    list_filter = ('category', 'level', 'rarity', 'is_secret')
+    search_fields = ('name', 'description')
+    filter_horizontal = ('prerequisites',)
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'description', 'icon_url')
+        }),
+        ('Atributos', {
+            'fields': ('category', 'subcategory', 'level', 'rarity', 'is_secret', 'points_awarded')
+        }),
+        ('Lógica de Desbloqueo', {
+            'fields': ('conditions', 'prerequisites'),
+            'description': 'Configura la lógica en formato JSON y las insignias previas requeridas.'
+        }),
+    )
+
+@admin.register(UserBadge)
+class UserBadgeAdmin(admin.ModelAdmin):
+    list_display = ('user', 'badge', 'earned_at')
+    list_filter = ('earned_at', 'badge__rarity')
+    search_fields = ('user__username', 'badge__name')
 
 @admin.register(StudentProgress)
 class StudentProgressAdmin(admin.ModelAdmin):
