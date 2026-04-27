@@ -56,8 +56,8 @@
                         <i class="fas fa-users"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-label">{% trans "Soluciones Totales" %}</span>
-                        <span class="stat-value">{% with total_solves=0 %}{% for c in challenges %}{% with total_solves=total_solves|add:c.submission_set.count %}{% endwith %}{% endfor %}{{ total_solves }}{% endwith %}</span>
+                        <span class="stat-label" data-translate="Soluciones Totales">Soluciones Totales</span>
+                        <span class="stat-value">{% with total_solves=0 %}{% for c in challenges %}{% with total_solves=total_solves|add:c.submissions.count %}{% endwith %}{% endfor %}{{ total_solves }}{% endwith %}</span>
                     </div>
                 </div>
             </div>
@@ -133,7 +133,7 @@
                                 </div>
                                 <div class="solves-count">
                                     <i class="fas fa-bolt me-1 text-gold"></i>
-                                    {{ challenge.submission_set.count }} {% trans "soluciones" %}
+                                    {{ challenge.submissions.count }} <span data-translate="soluciones">soluciones</span>
                                 </div>
                             </div>
                         </div>
