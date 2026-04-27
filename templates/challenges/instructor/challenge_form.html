@@ -80,7 +80,41 @@
                             </div>
                         </div>
 
-                        <!-- Sección 3: Recompensa y Estado -->
+                        <!-- Sección 3: Recurso Externo (Genially) -->
+                        <div class="p-4 border-bottom border-top border-border bg-soft-light">
+                            <h5 class="fw-bold mb-0" style="font-family: var(--font-head);"><i class="fas fa-globe me-2 text-primary"></i> {% trans "Recurso Interactivo (Opcional)" %}</h5>
+                        </div>
+                        <div class="p-4">
+                            <div class="mb-4">
+                                <label for="{{ form.external_resource_url.id_for_label }}" class="form-label fw-semibold small text-uppercase">{% trans "URL del Recurso Externo" %}</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0"><i class="fas fa-link text-primary"></i></span>
+                                    {{ form.external_resource_url }}
+                                </div>
+                                {% if form.external_resource_url.errors %}
+                                <div class="invalid-feedback d-block">{{ form.external_resource_url.errors|join:", " }}</div>
+                                {% endif %}
+                                <div class="form-text">{{ form.external_resource_url.help_text }}</div>
+                            </div>
+                            
+                            <!-- Vista previa de Genially -->
+                            <div id="genially-preview" class="d-none">
+                                <div class="preview-card border rounded p-3 bg-light">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fas fa-eye me-2 text-primary"></i>
+                                        <span class="fw-semibold">{% trans "Vista previa del recurso" %}</span>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary ms-auto" onclick="closePreview()">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                    <div class="preview-container">
+                                        <iframe id="preview-iframe" width="100%" height="300" frameborder="0" class="rounded"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sección 4: Recompensa y Estado -->
                         <div class="p-4 border-bottom border-top border-border bg-soft-light">
                             <h5 class="fw-bold mb-0" style="font-family: var(--font-head);"><i class="fas fa-award me-2 text-primary"></i> {% trans "Recompensa" %}</h5>
                         </div>
@@ -170,6 +204,49 @@
                 input.classList.add('form-check-input');
             }
         });
+        
+        // Genially preview functionality
+        const geniallyUrlInput = document.getElementById('id_external_resource_url');
+        const previewContainer = document.getElementById('genially-preview');
+        const previewIframe = document.getElementById('preview-iframe');
+        
+        if (geniallyUrlInput) {
+            geniallyUrlInput.addEventListener('input', function() {
+                const url = this.value.trim();
+                if (url && (url.includes('genially.com') || url.includes('genial.ly'))) {
+                    showGeniallyPreview(url);
+                } else if (url) {
+                    showWebsitePreview(url);
+                } else {
+                    closePreview();
+                }
+            });
+            
+            // Show preview on page load if URL exists
+            const initialUrl = geniallyUrlInput.value.trim();
+            if (initialUrl) {
+                if (initialUrl.includes('genially.com') || initialUrl.includes('genial.ly')) {
+                    showGeniallyPreview(initialUrl);
+                } else if (initialUrl) {
+                    showWebsitePreview(initialUrl);
+                }
+            }
+        }
+        
+        function showGeniallyPreview(url) {
+            previewContainer.classList.remove('d-none');
+            previewIframe.src = url;
+        }
+        
+        function showWebsitePreview(url) {
+            previewContainer.classList.remove('d-none');
+            previewIframe.src = url;
+        }
+        
+        window.closePreview = function() {
+            previewContainer.classList.add('d-none');
+            previewIframe.src = '';
+        };
         
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function () {

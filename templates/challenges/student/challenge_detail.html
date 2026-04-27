@@ -33,6 +33,50 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Genially/External Resource Embed -->
+            {% if challenge.external_resource_url %}
+            <div class="card border-0 shadow-sm bg-card mb-4 overflow-hidden">
+                <div class="card-header bg-soft-primary py-3 px-4 border-bottom border-border">
+                    <h5 class="fw-bold mb-0" style="font-family: var(--font-head);">
+                        <i class="fas fa-globe me-2 text-primary"></i> {% trans "Recurso Interactivo" %}
+                    </h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="genially-embed-container">
+                        {% if 'genially' in challenge.external_resource_url|lower %}
+                        <!-- Genially Embed -->
+                        <iframe 
+                            src="{{ challenge.external_resource_url }}" 
+                            width="100%" 
+                            height="500" 
+                            frameborder="0" 
+                            allowfullscreen
+                            class="genially-iframe">
+                        </iframe>
+                        {% else %}
+                        <!-- General Website Embed -->
+                        <div class="website-preview">
+                            <div class="preview-header">
+                                <i class="fas fa-external-link-alt me-2"></i>
+                                <span>{% trans "Visita el recurso externo" %}</span>
+                                <a href="{{ challenge.external_resource_url }}" target="_blank" class="btn btn-primary btn-sm ms-auto">
+                                    <i class="fas fa-external-link-alt me-1"></i> {% trans "Abrir" %}
+                                </a>
+                            </div>
+                            <iframe 
+                                src="{{ challenge.external_resource_url }}" 
+                                width="100%" 
+                                height="450" 
+                                frameborder="0"
+                                class="website-iframe">
+                            </iframe>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
             
             {% if is_solved %}
             <div class="alert alert-success border-0 shadow-sm d-flex align-items-center p-4 mb-4">
@@ -139,6 +183,47 @@
     .form-control:focus {
         border-color: var(--accent);
         box-shadow: 0 0 0 0.25rem rgba(213, 28, 0, 0.1);
+    }
+    
+    /* Genially Embed Styles */
+    .genially-embed-container {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+    }
+    
+    .genially-iframe {
+        border: none;
+        border-radius: 0 0 0.5rem 0.5rem;
+        background: #f8f9fa;
+    }
+    
+    .website-preview {
+        position: relative;
+    }
+    
+    .preview-header {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        background: rgba(213, 28, 0, 0.05);
+        border-bottom: 1px solid var(--border);
+        font-weight: 600;
+        color: var(--text);
+    }
+    
+    .website-iframe {
+        border: none;
+        background: white;
+    }
+    
+    [data-theme="dark"] .preview-header {
+        background: rgba(255, 255, 255, 0.05);
+    }
+    
+    [data-theme="dark"] .genially-iframe,
+    [data-theme="dark"] .website-iframe {
+        background: var(--navy);
     }
 </style>
 {% endblock %}
