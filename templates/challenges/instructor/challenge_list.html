@@ -2,146 +2,379 @@
 
 {% block content %}
 <div class="container py-5">
-    <div class="d-flex justify-content-between align-items-end mb-5">
-        <div>
-            <h1 class="display-5 fw-bold text-gradient mb-2" style="font-family: var(--font-head);">Panel de Instructor</h1>
-            <p class="text-muted mb-0">Gestiona y despliega desafíos de ciberseguridad para tus estudiantes.</p>
-        </div>
-        <a href="{% url 'challenge_create' %}" class="btn btn-primary btn-lg px-4 shadow-sm">
-            <i class="fas fa-plus-circle me-2"></i> Nuevo Reto
-        </a>
-    </div>
-
-    <div class="row g-4">
-        {% for challenge in challenges %}
-        <div class="col-md-6 col-lg-4">
-            <div class="card h-100 border-0 shadow-sm bg-card hover-lift">
-                <div class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
-                    <span class="badge rounded-pill bg-soft-primary px-3 py-2 text-uppercase letter-spacing-1" style="font-size: 0.7rem;">
-                        {{ challenge.get_category_display }}
-                    </span>
-                    
-                    {% if challenge.created_by == request.user or request.user.is_superuser %}
-                    <div class="dropdown">
-                        <button class="btn btn-link text-muted p-0" data-bs-toggle="dropdown">
-                            <i class="fas fa-ellipsis-v"></i>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
-                            <li><a class="dropdown-item" href="{% url 'challenge_edit' challenge.pk %}"><i class="fas fa-edit me-2"></i> Editar</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-danger" href="{% url 'challenge_delete' challenge.pk %}"><i class="fas fa-trash-alt me-2"></i> Eliminar</a></li>
-                        </ul>
-                    </div>
-                    {% else %}
-                    <span class="text-muted small" title="Creado por {{ challenge.created_by.username }}">
-                        <i class="fas fa-lock me-1"></i> Ajeno
-                    </span>
-                    {% endif %}
-                </div>
-                <div class="card-body px-4 pb-4">
-                    <h5 class="card-title fw-bold mb-3" style="font-family: var(--font-head);">
-                        {% if challenge.created_by == request.user or request.user.is_superuser %}
-                        <a href="{% url 'instructor_challenge_detail' challenge.pk %}" class="text-decoration-none text-dark hover-primary">
-                            {{ challenge.title }}
-                        </a>
-                        {% else %}
-                        <span class="text-dark opacity-75">{{ challenge.title }}</span>
-                        {% endif %}
-                    </h5>
-                    
-                    <div class="mb-3">
-                        <span class="text-muted" style="font-size: 0.75rem;">
-                            <i class="fas fa-user-circle me-1"></i> {{ challenge.created_by.get_full_name|default:challenge.created_by.username }}
-                        </span>
-                    </div>
+    <!-- Header Section -->
+    <div class="dashboard-header mb-5 animate__animated animate__fadeInDown">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
                     <div class="d-flex align-items-center mb-3">
-                        <div class="me-3">
-                            <span class="text-muted small d-block">Dificultad</span>
-                            <div class="d-flex gap-1 mt-1">
-                                {% for i in "12345" %}
-                                <div style="width: 12px; height: 4px; border-radius: 2px;" class="{% if forloop.counter <= challenge.difficulty %}bg-primary{% else %}bg-border{% endif %}"></div>
-                                {% endfor %}
-                            </div>
+                        <div class="hex-badge me-3">
+                            <i class="fas fa-terminal"></i>
                         </div>
-                        <div class="ms-auto text-end">
-                            <span class="text-muted small d-block">Puntos</span>
-                            <span class="fw-bold text-primary">{{ challenge.points }}</span>
-                        </div>
+                        <h1 class="display-5 fw-bold text-gradient-pro mb-0">Panel de Instructor</h1>
                     </div>
-                    <div class="d-flex align-items-center justify-content-between pt-3 border-top border-border">
-                        <div class="d-flex align-items-center">
-                            {% if challenge.is_published %}
-                            <span class="text-success small"><i class="fas fa-check-circle me-1"></i> Publicado</span>
+                    <p class="text-muted-pro lead mb-0">Arquitectura y despliegue de desafíos tácticos de ciberseguridad.</p>
+                </div>
+                <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+                    <a href="{% url 'challenge_create' %}" class="btn-create-pro">
+                        <span class="btn-content">
+                            <i class="fas fa-plus-circle me-2"></i> Nuevo Desafío
+                        </span>
+                        <span class="btn-shine"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    <!-- Stats Overview (Optional but professional) -->
+    <div class="row g-4 mb-5 animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+            <div class="col-md-4">
+                <div class="stat-card-pro">
+                    <div class="stat-icon bg-soft-accent">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Total Retos</span>
+                        <span class="stat-value">{{ challenges.count }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card-pro">
+                    <div class="stat-icon bg-soft-success">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Publicados</span>
+                        <span class="stat-value">{{ challenges|dictsort:"is_published"|reverse|slice:":1"|first|yesno:"-" }}{{ challenges.filter.is_published.count|default:0 }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card-pro">
+                    <div class="stat-icon bg-soft-primary">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Soluciones Totales</span>
+                        <span class="stat-value">{% with total_solves=0 %}{% for c in challenges %}{% with total_solves=total_solves|add:c.submission_set.count %}{% endwith %}{% endfor %}{{ total_solves }}{% endwith %}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!-- Grid Section -->
+    <div class="row g-4 animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+            {% for challenge in challenges %}
+            <div class="col-md-6 col-lg-4">
+                <div class="challenge-card-pro h-100">
+                    <div class="card-glow"></div>
+                    <div class="card-content-pro">
+                        <div class="card-header-pro">
+                            <span class="category-tag">
+                                <i class="fas fa-tag me-1"></i> {{ challenge.get_category_display }}
+                            </span>
+                            
+                            {% if challenge.created_by == request.user or request.user.is_superuser %}
+                            <div class="dropdown">
+                                <button class="btn-action-pro" data-bs-toggle="dropdown">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 animate__animated animate__fadeIn animate__faster">
+                                    <li><a class="dropdown-item" href="{% url 'challenge_edit' challenge.pk %}"><i class="fas fa-edit me-2 text-primary"></i> Editar</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-danger" href="{% url 'challenge_delete' challenge.pk %}"><i class="fas fa-trash-alt me-2"></i> Eliminar</a></li>
+                                </ul>
+                            </div>
                             {% else %}
-                            <span class="text-warning small"><i class="fas fa-pencil-alt me-1"></i> Borrador</span>
+                            <span class="lock-badge" title="Solo lectura">
+                                <i class="fas fa-lock"></i>
+                            </span>
                             {% endif %}
                         </div>
-                        <div class="text-muted small">
-                            <i class="fas fa-users me-1"></i> {{ challenge.submission_set.count }} solves
+
+                        <div class="card-body-pro">
+                            <h3 class="challenge-title-pro">
+                                {% if challenge.created_by == request.user or request.user.is_superuser %}
+                                <a href="{% url 'instructor_challenge_detail' challenge.pk %}">
+                                    {{ challenge.title }}
+                                </a>
+                                {% else %}
+                                <span>{{ challenge.title }}</span>
+                                {% endif %}
+                            </h3>
+                            
+                            <div class="instructor-info mb-4">
+                                <div class="avatar-sm">
+                                    {{ challenge.created_by.username|slice:":1"|upper }}
+                                </div>
+                                <span class="instructor-name">{{ challenge.created_by.get_full_name|default:challenge.created_by.username }}</span>
+                            </div>
+
+                            <div class="metrics-container mb-4">
+                                <div class="metric-item">
+                                    <span class="metric-label">Dificultad</span>
+                                    <div class="difficulty-bars">
+                                        {% for i in "12345" %}
+                                        <div class="bar {% if forloop.counter <= challenge.difficulty %}active{% endif %}"></div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="metric-item text-end">
+                                    <span class="metric-label">Puntos</span>
+                                    <span class="points-value">{{ challenge.points }}</span>
+                                </div>
+                            </div>
+
+                            <div class="card-footer-pro">
+                                <div class="status-indicator {% if challenge.is_published %}status-online{% else %}status-offline{% endif %}">
+                                    <span class="status-dot"></span>
+                                    {{ challenge.is_published|yesno:"Publicado,Borrador" }}
+                                </div>
+                                <div class="solves-count">
+                                    <i class="fas fa-bolt me-1 text-gold"></i>
+                                    {{ challenge.submission_set.count }} solves
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        {% empty %}
-        <div class="col-12">
-            <div class="text-center py-5 border-2 border-dashed border-border rounded-lg bg-soft-light">
-                <div class="mb-4">
-                    <i class="fas fa-shield-virus fa-4x text-muted opacity-25"></i>
+            {% empty %}
+            <div class="col-12">
+                <div class="empty-state-pro animate__animated animate__zoomIn">
+                    <div class="empty-icon-wrapper">
+                        <i class="fas fa-ghost"></i>
+                        <div class="icon-ring"></div>
+                    </div>
+                    <h3 class="fw-bold mb-3">Zona de Operaciones Vacía</h3>
+                    <p class="text-muted mb-4 mx-auto" style="max-width: 400px;">
+                        No se han detectado desafíos en tu sector. Inicia el despliegue de tu primer reto táctico.
+                    </p>
+                    <a href="{% url 'challenge_create' %}" class="btn-create-pro mx-auto">
+                        <span class="btn-content">Crear Primer Reto</span>
+                        <span class="btn-shine"></span>
+                    </a>
                 </div>
-                <h3 class="fw-bold mb-2">No has creado retos todavía</h3>
-                <p class="text-muted mb-4">Empieza creando tu primer desafío de ciberseguridad para la comunidad.</p>
-                <a href="{% url 'challenge_create' %}" class="btn btn-primary px-4">
-                    Crear mi primer reto
-                </a>
             </div>
-        </div>
-        {% endfor %}
+            {% endfor %}
     </div>
 </div>
 
 <style>
-    .text-gradient {
-        background: linear-gradient(45deg, var(--navy), var(--accent));
+    :root {
+        --pro-card: var(--white);
+        --pro-text: var(--text);
+        --pro-accent: var(--accent);
+        --pro-accent-gradient: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+        --pro-shadow: 0 10px 40px rgba(0,0,0,0.04);
+        --pro-border: rgba(27, 34, 64, 0.08);
+    }
+
+    [data-theme="dark"] {
+        --pro-card: #161a26;
+        --pro-text: #d8dce8;
+        --pro-border: rgba(255, 255, 255, 0.05);
+        --pro-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    }
+
+    /* Header Styles */
+    .text-gradient-pro {
+        background: var(--pro-accent-gradient);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        font-family: var(--font-head);
+        letter-spacing: -1px;
     }
-    [data-theme="dark"] .text-gradient {
-        background: linear-gradient(45deg, #fff, var(--accent-2));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+    
+    .hex-badge {
+        width: 48px; height: 48px;
+        background: var(--pro-accent-gradient);
+        display: flex; align-items: center; justify-content: center;
+        color: white; font-size: 1.2rem;
+        clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
     }
-    .bg-card {
-        background-color: var(--white);
+
+    .text-muted-pro {
+        color: var(--text-muted);
+        font-weight: 500;
+        opacity: 0.8;
     }
-    .bg-soft-primary {
-        background-color: rgba(213, 28, 0, 0.1);
-        color: var(--accent);
+
+    /* Stat Cards */
+    .stat-card-pro {
+        background: var(--pro-card);
+        border: 1px solid var(--pro-border);
+        border-radius: 20px;
+        padding: 24px;
+        display: flex;
+        align-items: center;
+        box-shadow: var(--pro-shadow);
+        transition: transform 0.3s;
     }
-    .hover-primary:hover {
-        color: var(--accent) !important;
+    .stat-card-pro:hover { transform: translateY(-5px); }
+    
+    .stat-icon {
+        width: 54px; height: 54px;
+        border-radius: 16px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.4rem;
+        margin-right: 20px;
     }
-    .bg-border {
-        background-color: var(--border);
+    .bg-soft-accent { background: rgba(213, 28, 0, 0.1); color: var(--accent); }
+    .bg-soft-success { background: rgba(40, 167, 69, 0.1); color: #28a745; }
+    .bg-soft-primary { background: rgba(27, 34, 64, 0.1); color: var(--navy); }
+
+    .stat-label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .stat-value { display: block; font-size: 1.5rem; font-weight: 800; color: var(--pro-text); font-family: var(--font-head); }
+
+    /* Challenge Cards */
+    .challenge-card-pro {
+        background: var(--pro-card);
+        border: 1px solid var(--pro-border);
+        border-radius: 24px;
+        position: relative;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        overflow: hidden;
+        box-shadow: var(--pro-shadow);
     }
-    .border-border {
-        border-color: var(--border) !important;
+    .challenge-card-pro:hover {
+        transform: translateY(-10px) scale(1.02);
+        border-color: var(--pro-accent);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
     }
-    .hover-lift {
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    .card-glow {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: radial-gradient(circle at top right, rgba(213, 28, 0, 0.05), transparent);
+        opacity: 0; transition: 0.4s;
     }
-    .hover-lift:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important;
+    .challenge-card-pro:hover .card-glow { opacity: 1; }
+
+    .card-content-pro { position: relative; z-index: 1; padding: 30px; }
+
+    .card-header-pro {
+        display: flex; justify-content: space-between; align-items: center;
+        margin-bottom: 25px;
     }
-    .letter-spacing-1 {
-        letter-spacing: 1px;
+
+    .category-tag {
+        background: rgba(27, 34, 64, 0.05);
+        border: 1px solid var(--pro-border);
+        padding: 6px 14px;
+        border-radius: 100px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--text-muted);
     }
-    .border-dashed {
-        border-style: dashed !important;
+
+    .btn-action-pro {
+        background: none; border: none; color: var(--text-muted);
+        width: 32px; height: 32px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        transition: 0.2s;
     }
-    .bg-soft-light {
-        background-color: var(--sand-2);
+    .btn-action-pro:hover { background: rgba(27, 34, 64, 0.05); color: var(--pro-text); }
+
+    .challenge-title-pro { margin-bottom: 15px; }
+    .challenge-title-pro a, .challenge-title-pro span {
+        font-family: var(--font-head);
+        font-weight: 700;
+        font-size: 1.25rem;
+        color: var(--pro-text);
+        text-decoration: none;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        transition: 0.2s;
+    }
+    .challenge-title-pro a:hover { color: var(--pro-accent); }
+
+    .instructor-info { display: flex; align-items: center; }
+    .avatar-sm {
+        width: 24px; height: 24px; border-radius: 6px;
+        background: var(--navy); color: white;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 0.7rem; font-weight: 800; margin-right: 10px;
+    }
+    .instructor-name { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); }
+
+    .metrics-container {
+        display: flex; justify-content: space-between;
+        padding: 15px 0; border-top: 1px solid var(--pro-border);
+    }
+    .metric-label { display: block; font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px; }
+    
+    .difficulty-bars { display: flex; gap: 4px; }
+    .bar { width: 14px; height: 4px; border-radius: 2px; background: var(--pro-border); }
+    .bar.active { background: var(--pro-accent); box-shadow: 0 0 10px rgba(213, 28, 0, 0.3); }
+
+    .points-value { font-family: var(--font-head); font-weight: 800; color: var(--pro-accent); font-size: 1.1rem; }
+
+    .card-footer-pro {
+        display: flex; justify-content: space-between; align-items: center;
+        padding-top: 20px; border-top: 1px dashed var(--pro-border);
+    }
+
+    .status-indicator { font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; }
+    .status-online { color: #28a745; }
+    .status-online .status-dot { background: #28a745; box-shadow: 0 0 8px #28a745; }
+    .status-offline { color: #ffc107; }
+    .status-offline .status-dot { background: #ffc107; }
+
+    .solves-count { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); }
+
+    /* Button Pro */
+    .btn-create-pro {
+        display: inline-block;
+        position: relative;
+        background: var(--navy);
+        border: none;
+        border-radius: 14px;
+        padding: 14px 28px;
+        text-decoration: none;
+        overflow: hidden;
+        transition: 0.3s;
+    }
+    .btn-create-pro:hover { background: var(--navy-2); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
+    .btn-content { position: relative; z-index: 2; color: white; font-weight: 700; font-size: 0.9rem; }
+    .btn-shine {
+        position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+        transition: 0.5s;
+    }
+    .btn-create-pro:hover .btn-shine { left: 100%; }
+
+    /* Empty State */
+    .empty-state-pro {
+        background: var(--pro-card);
+        border: 2px dashed var(--pro-border);
+        border-radius: 30px;
+        padding: 80px 40px;
+        text-align: center;
+    }
+    .empty-icon-wrapper {
+        position: relative; width: 100px; height: 100px; margin: 0 auto 30px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 3rem; color: var(--pro-border);
+    }
+    .icon-ring {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        border: 2px solid var(--pro-border); border-radius: 50%;
+        animation: pulse-ring 2s infinite;
+    }
+    @keyframes pulse-ring {
+        0% { transform: scale(0.8); opacity: 0.5; }
+        100% { transform: scale(1.2); opacity: 0; }
+    }
+
+    @media (max-width: 991px) {
+        .dashboard-header { text-align: center; }
+        .dashboard-header .row { flex-direction: column; }
+        .hex-badge { margin: 0 auto 15px; }
     }
 </style>
 {% endblock %}

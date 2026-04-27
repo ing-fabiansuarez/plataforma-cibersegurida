@@ -150,6 +150,12 @@
     .input-group-text {
         border: 1.5px solid var(--border);
     }
+    .invalid-feedback {
+        color: var(--accent);
+        font-weight: 600;
+        font-size: 0.8rem;
+        margin-top: 0.5rem;
+    }
 </style>
 
 <script>
@@ -157,12 +163,27 @@
     document.addEventListener('DOMContentLoaded', function() {
         const inputs = document.querySelectorAll('input, select, textarea');
         inputs.forEach(input => {
-            if (input.type !== 'checkbox') {
+            if (input.type !== 'checkbox' && input.type !== 'radio' && !input.classList.contains('form-control') && !input.classList.contains('form-select')) {
                 input.classList.add('form-control');
-            } else {
+            } else if (input.type === 'checkbox' || input.type === 'radio') {
                 input.classList.add('form-check-input');
             }
         });
+        
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
     });
 </script>
 {% endblock %}

@@ -1,41 +1,303 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Registro — CyberLearn{% endblock %}
+{% block title %}Crear Cuenta — CyberLearn{% endblock %}
 
 {% block content %}
-<div style="max-width: 450px; margin: 4rem auto; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2.5rem; box-shadow: 0 12px 32px rgba(0,0,0,0.05);">
-    <div style="text-align: center; margin-bottom: 2rem;">
-        <div style="width: 64px; height: 64px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 32px; height: 32px;"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
-        </div>
-        <h2 style="font-family: var(--font-head); color: var(--navy); font-size: 24px;">Crear Cuenta</h2>
-        <p style="color: var(--text-muted); font-size: 14px; margin-top: 5px;">Únete a la academia de ciberseguridad</p>
-    </div>
+<div class="auth-wrapper">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-7 col-lg-6">
+                <div class="auth-card-pro animate__animated animate__fadeIn">
+                    <div class="auth-header-pro">
+                        <div class="auth-brand-pro mb-4">
+                            <div class="hex-logo logo-accent">
+                                <i class="fas fa-user-plus"></i>
+                                <div class="hex-inner"></div>
+                            </div>
+                        </div>
+                        <h2 class="auth-title-pro h3 fw-bold mb-1">Únete a la Academia</h2>
+                        <p class="auth-subtitle-pro text-muted small">Crea tu terminal de estudiante y empieza a hackear</p>
+                    </div>
 
-    <form method="post">
-        {% csrf_token %}
-        {% for field in form %}
-        <div style="margin-bottom: 1.25rem;">
-            <label for="{{ field.id_for_label }}" style="display: block; font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px;">{{ field.label }}</label>
-            <input type="{{ field.field.widget.input_type|default:'text' }}" name="{{ field.html_name }}" id="{{ field.id_for_label }}" required style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius); font-family: var(--font-body); font-size: 14px; outline: none; transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--navy)'" onblur="this.style.borderColor='var(--border)'">
-            {% if field.errors %}
-                {% for error in field.errors %}
-                    <p style="color: var(--accent); font-size: 11px; margin-top: 4px;">{{ error }}</p>
-                {% endfor %}
-            {% endif %}
-            {% if field.help_text %}
-                <p style="color: var(--text-muted); font-size: 11px; margin-top: 4px; opacity: 0.7;">{{ field.help_text }}</p>
-            {% endif %}
-        </div>
-        {% endfor %}
-        
-        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 14px; font-size: 15px; margin-top: 1rem;">
-            Registrarse como Estudiante
-        </button>
-    </form>
+                    <div class="auth-body-pro p-4 pt-0">
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger-pro mb-4 animate__animated animate__shakeX">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-triangle-exclamation me-3 fs-4"></i>
+                                    <div class="flex-grow-1">
+                                        <div class="fw-bold small">Error en el Registro</div>
+                                        {% for error in form.non_field_errors %}
+                                            <div class="x-small">{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+                                    <button type="button" class="btn-close-pro" onclick="this.parentElement.parentElement.remove()">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        {% endif %}
 
-    <div style="text-align: center; margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 1.5rem;">
-        <p style="font-size: 13px; color: var(--text-muted);">¿Ya tienes una cuenta? <a href="{% url 'login' %}" style="color: var(--accent); font-weight: 600; text-decoration: none;">Inicia sesión</a></p>
+                        <form method="post" novalidate id="signupForm">
+                            {% csrf_token %}
+                            
+                            <div class="row g-3">
+                                {% for field in form %}
+                                <div class="col-md-{% if 'password' in field.name or 'email' in field.name or 'username' in field.name %}12{% else %}6{% endif %}">
+                                    <div class="input-container-pro">
+                                        <label class="label-pro" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                        <div class="input-wrapper-pro {% if field.errors %}is-invalid{% endif %}">
+                                            <span class="input-icon-pro">
+                                                {% if 'user' in field.name or 'username' in field.name %}<i class="fas fa-user-ninja"></i>
+                                                {% elif 'email' in field.name %}<i class="fas fa-envelope-open-text"></i>
+                                                {% elif 'password' in field.name %}<i class="fas fa-key-skeleton"></i>
+                                                {% else %}<i class="fas fa-id-card"></i>{% endif %}
+                                            </span>
+                                            <input type="{{ field.field.widget.input_type|default:'text' }}" 
+                                                   name="{{ field.html_name }}" 
+                                                   id="{{ field.id_for_label }}" 
+                                                   required 
+                                                   class="input-field-pro"
+                                                   placeholder="{{ field.label }}"
+                                                   value="{{ field.value|default:'' }}">
+                                            
+                                            {% if 'password' in field.name %}
+                                            <button type="button" class="password-toggle-pro" onclick="togglePassword('{{ field.id_for_label }}', this)">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            {% endif %}
+                                        </div>
+                                        {% if field.errors %}
+                                            <div class="error-text-pro animate__animated animate__fadeIn">
+                                                <i class="fas fa-info-circle me-1"></i> {{ field.errors.0 }}
+                                            </div>
+                                        {% endif %}
+                                        {% if field.help_text %}
+                                            <div class="help-text-pro">{{ field.help_text|safe }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+
+                            <button type="submit" class="btn-submit-pro w-100 mt-4 mb-3">
+                                <span class="btn-content">
+                                    <span class="btn-text">REGISTRARSE COMO ESTUDIANTE</span>
+                                    <span class="btn-arrow"><i class="fas fa-rocket"></i></span>
+                                </span>
+                                <div class="btn-shine"></div>
+                            </button>
+                        </form>
+
+                        <div class="auth-footer-pro text-center pt-3 border-top border-light-subtle">
+                            <p class="small text-muted mb-0">
+                                ¿Ya tienes una cuenta operativa? 
+                                <a href="{% url 'login' %}" class="signup-link-pro">Inicia sesión</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<style>
+    /* Professional Design Variables - Synced with login.html */
+    :root {
+        --auth-bg-color: var(--sand-2);
+        --card-bg-color: var(--white);
+        --input-bg-color: var(--sand-2);
+        --input-border-color: var(--border);
+        --shadow-elevation: 0 10px 30px rgba(0,0,0,0.05), 0 1px 8px rgba(0,0,0,0.02);
+        --accent-gradient: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+        --logo-gradient: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+    }
+
+    [data-theme="dark"] {
+        --auth-bg-color: #0d1017;
+        --card-bg-color: #161a26;
+        --input-bg-color: #0f1219;
+        --input-border-color: rgba(255,255,255,0.08);
+        --shadow-elevation: 0 20px 50px rgba(0,0,0,0.3);
+    }
+
+    .auth-wrapper {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+        padding: 80px 0;
+    }
+
+    /* Card Pro */
+    .auth-card-pro {
+        background: var(--card-bg-color);
+        backdrop-filter: blur(10px);
+        border-radius: 32px;
+        border: 1px solid var(--input-border-color);
+        box-shadow: var(--shadow-elevation);
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+    }
+
+    .auth-header-pro { padding: 45px 45px 25px; text-align: center; }
+
+    .hex-logo {
+        width: 72px; height: 72px;
+        background: var(--logo-gradient);
+        margin: 0 auto;
+        display: flex; align-items: center; justify-content: center;
+        color: white; font-size: 1.8rem;
+        position: relative;
+        clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+        box-shadow: 0 10px 20px rgba(27, 34, 64, 0.2);
+    }
+    .logo-accent { background: var(--accent-gradient); box-shadow: 0 10px 20px rgba(213, 28, 0, 0.2); }
+    
+    .hex-inner {
+        position: absolute;
+        top: 4px; left: 4px; right: 4px; bottom: 4px;
+        border: 2px solid rgba(255,255,255,0.15);
+        clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    }
+
+    .auth-title-pro { color: var(--text); font-family: var(--font-head); letter-spacing: -0.5px; }
+
+    /* Inputs Pro */
+    .label-pro {
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: var(--text-muted);
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .input-wrapper-pro {
+        background: var(--input-bg-color);
+        border: 1.5px solid var(--input-border-color);
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        padding: 0 16px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .input-wrapper-pro:focus-within {
+        border-color: var(--accent);
+        background: var(--card-bg-color);
+        box-shadow: 0 0 0 4px rgba(213, 28, 0, 0.08);
+        transform: translateY(-1px);
+    }
+    .input-wrapper-pro.is-invalid { border-color: var(--accent); }
+
+    .input-icon-pro { color: var(--text-muted); font-size: 1rem; margin-right: 12px; opacity: 0.7; }
+    .input-field-pro {
+        background: transparent;
+        border: none;
+        padding: 13px 0;
+        width: 100%;
+        color: var(--text);
+        font-weight: 500;
+        outline: none;
+        font-size: 0.92rem;
+    }
+    .input-field-pro::placeholder { color: var(--text-muted); opacity: 0.4; }
+
+    .password-toggle-pro {
+        background: none; border: none; color: var(--text-muted);
+        padding: 8px; cursor: pointer; transition: color 0.2s;
+    }
+    .password-toggle-pro:hover { color: var(--accent); }
+
+    /* Submit Button Pro */
+    .btn-submit-pro {
+        position: relative;
+        background: var(--navy);
+        border: none;
+        border-radius: 14px;
+        padding: 18px;
+        overflow: hidden;
+        transition: all 0.3s;
+    }
+    .btn-content {
+        position: relative; z-index: 2;
+        display: flex; justify-content: center; align-items: center;
+        color: white; font-weight: 700; letter-spacing: 1px; font-size: 0.88rem;
+    }
+    .btn-arrow { margin-left: 12px; transition: transform 0.3s; }
+    .btn-submit-pro:hover {
+        background: var(--navy-2);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 24px rgba(27, 34, 64, 0.2);
+    }
+    .btn-submit-pro:hover .btn-arrow { transform: translateX(5px) rotate(15deg); }
+    
+    .btn-shine {
+        position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+        transition: 0.6s;
+    }
+    .btn-submit-pro:hover .btn-shine { left: 100%; }
+
+    /* Alerts Pro */
+    .alert-danger-pro {
+        background: rgba(213, 28, 0, 0.08);
+        border: 1px solid rgba(213, 28, 0, 0.15);
+        color: var(--accent);
+        padding: 14px 18px;
+        border-radius: 16px;
+        position: relative;
+    }
+    .btn-close-pro {
+        background: none; border: none; color: var(--accent);
+        opacity: 0.5; cursor: pointer; transition: 0.2s;
+    }
+    .btn-close-pro:hover { opacity: 1; }
+
+    .error-text-pro {
+        color: var(--accent);
+        font-size: 0.7rem;
+        margin-top: 6px;
+        font-weight: 600;
+        display: flex; align-items: center;
+    }
+    .help-text-pro {
+        font-size: 0.65rem;
+        color: var(--text-muted);
+        opacity: 0.7;
+        margin-top: 5px;
+        padding-left: 2px;
+    }
+
+    .signup-link-pro {
+        color: var(--accent); font-weight: 700; text-decoration: none;
+        transition: 0.2s;
+    }
+    .signup-link-pro:hover { color: var(--accent-2); text-decoration: underline; }
+
+    .x-small { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.5px; }
+    
+    @media (max-width: 768px) {
+        .auth-header-pro { padding: 30px 20px 15px; }
+        .auth-card-pro { border-radius: 24px; }
+    }
+</style>
+
+<script>
+    function togglePassword(inputId, btn) {
+        const input = document.getElementById(inputId);
+        const icon = btn.querySelector('i');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            input.type = 'password';
+            icon.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    }
+</script>
 {% endblock %}
