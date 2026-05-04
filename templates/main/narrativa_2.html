@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Red Fantasma" %} — Narrativa{% endblock %}
+
+{% block content %}
+<div class="narrativa-detail">
+    <nav class="breadcrumb">
+        <a href="{% url 'narrativas_list' %}" data-translate="Narrativas">Narrativas</a> / 
+        <span data-translate="Red Fantasma">Red Fantasma</span>
+    </nav>
+
+    <div class="narrativa-header">
+        <h1 data-translate="Red Fantasma">Red Fantasma</h1>
+        <div class="narrativa-meta">
+            <span class="badge badge-warning" data-translate="Nivel: Medio">Nivel: Medio</span>
+            <span class="badge badge-primary" data-translate="Categoría: Redes">Categoría: Redes</span>
+        </div>
+    </div>
+
+    <div class="narrativa-body">
+        <section class="narrativa-section">
+            <h2 data-translate="La Intrusión">La Intrusión</h2>
+            <p data-translate="Has logrado conectarte a un puerto ethernet oculto tras una impresora en la sala de conferencias del tercer piso. Tu escaneo inicial con Nmap revela algo extraño: no hay hosts activos en el rango de IPs que te asignó el DHCP, pero el tráfico de red es constante.">
+                Has logrado conectarte a un puerto ethernet oculto tras una impresora en la sala de conferencias del tercer piso. Tu escaneo inicial con Nmap revela algo extraño: no hay hosts activos en el rango de IPs que te asignó el DHCP, pero el tráfico de red es constante.
+            </p>
+        </section>
+
+        <section class="narrativa-section">
+            <h2 data-translate="Evidencias Digitales">Evidencias Digitales</h2>
+            <div class="code-terminal">
+                <pre>
+$ tcpdump -i eth0 -n
+14:20:05.123 IP 10.0.5.4 > 10.0.5.255: ICMP echo request, id 1, seq 1
+14:20:06.456 IP 10.0.5.12 > 224.0.0.251: MDNS query
+...
+                </pre>
+            </div>
+            <p data-translate="Parece que la red está usando una segmentación por VLANs agresiva o quizás un túnel que no estás viendo.">
+                Parece que la red está usando una segmentación por VLANs agresiva o quizás un túnel que no estás viendo.
+            </p>
+        </section>
+
+        <section class="narrativa-section">
+            <h2 data-translate="Tu Siguiente Movimiento">Tu Siguiente Movimiento</h2>
+            <div class="decision-box">
+                <p data-translate="¿Qué herramienta decides usar ahora?">¿Qué herramienta decides usar ahora?</p>
+                <div class="decision-options">
+                    <button class="btn btn-outline" data-translate="Wireshark para analizar los paquetes MDNS y buscar nombres de hosts.">Wireshark para analizar los paquetes MDNS y buscar nombres de hosts.</button>
+                    <button class="btn btn-outline" data-translate="Responder para intentar capturar hashes NTLM en la red.">Responder para intentar capturar hashes NTLM en la red.</button>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<style>
+    /* Reuse styles from narrativa 1 or add to base css later */
+    .narrativa-detail { max-width: 800px; margin: 0 auto; padding: 2rem 0; }
+    .breadcrumb { margin-bottom: 2rem; font-size: 0.9rem; color: var(--text-muted); }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .narrativa-header h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+    .narrativa-meta { display: flex; gap: 10px; margin-bottom: 3rem; }
+    .badge { padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+    .badge-warning { background: rgba(255, 165, 0, 0.1); color: #ffa500; border: 1px solid #ffa500; }
+    .badge-primary { background: rgba(0, 123, 255, 0.1); color: #007bff; border: 1px solid #007bff; }
+    .narrativa-section { margin-bottom: 3rem; }
+    .narrativa-section h2 { color: var(--accent); margin-bottom: 1.5rem; font-size: 1.5rem; }
+    .narrativa-section p { line-height: 1.8; color: var(--text-main); font-size: 1.1rem; }
+    .code-terminal { background: #1e1e1e; color: #d4d4d4; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; font-family: 'Courier New', Courier, monospace; }
+    .decision-box { background: var(--bg-card); border: 2px dashed var(--accent); padding: 2rem; border-radius: 12px; margin-top: 2rem; }
+    .decision-box p { font-weight: 700; margin-bottom: 1.5rem; }
+    .decision-options { display: flex; flex-direction: column; gap: 1rem; }
+    .btn-outline { border: 1px solid var(--border-color); background: transparent; color: var(--text-main); text-align: left; padding: 1rem; transition: all 0.2s; }
+    .btn-outline:hover { background: var(--accent); color: white; border-color: var(--accent); }
+</style>
+{% endblock %}

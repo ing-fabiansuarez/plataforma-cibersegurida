@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Código Zero" %} — Narrativa{% endblock %}
+
+{% block content %}
+<div class="narrativa-detail">
+    <nav class="breadcrumb">
+        <a href="{% url 'narrativas_list' %}" data-translate="Narrativas">Narrativas</a> / 
+        <span data-translate="Código Zero">Código Zero</span>
+    </nav>
+
+    <div class="narrativa-header">
+        <h1 data-translate="Código Zero">Código Zero</h1>
+        <div class="narrativa-meta">
+            <span class="badge badge-dark" data-translate="Nivel: Experto">Nivel: Experto</span>
+            <span class="badge badge-danger" data-translate="Categoría: Malware">Categoría: Malware</span>
+        </div>
+    </div>
+
+    <div class="narrativa-body">
+        <section class="narrativa-section">
+            <h2 data-translate="La Amenaza">La Amenaza</h2>
+            <p data-translate="Una planta de tratamiento de agua ha reportado comportamientos erráticos en sus controladores lógicos programables (PLC). No hay rastro de tráfico externo inusual, lo que sugiere que el malware entró mediante un dispositivo físico o una actualización de software comprometida.">
+                Una planta de tratamiento de agua ha reportado comportamientos erráticos en sus controladores lógicos programables (PLC). No hay rastro de tráfico externo inusual, lo que sugiere que el malware entró mediante un dispositivo físico o una actualización de software comprometida.
+            </p>
+        </section>
+
+        <section class="narrativa-section">
+            <h2 data-translate="Desensamblado de la Muestra">Desensamblado de la Muestra</h2>
+            <div class="code-terminal">
+                <pre>
+00401000  push ebp
+00401001  mov ebp, esp
+00401003  sub esp, 0x20
+00401006  call dword [ds:GetSystemTime]
+0040100C  cmp eax, 0xdeadbeef
+...
+                </pre>
+            </div>
+            <p data-translate="El código utiliza técnicas de anti-debugging y parece estar esperando una fecha específica para activarse.">
+                El código utiliza técnicas de anti-debugging y parece estar esperando una fecha específica para activarse.
+            </p>
+        </section>
+
+        <section class="narrativa-section">
+            <h2 data-translate="Acción Inmediata">Acción Inmediata</h2>
+            <div class="decision-box">
+                <p data-translate="¿Cuál es tu prioridad?">¿Cuál es tu prioridad?</p>
+                <div class="decision-options">
+                    <button class="btn btn-outline" data-translate="Aislar físicamente la red de control de la red corporativa.">Aislar físicamente la red de control de la red corporativa.</button>
+                    <button class="btn btn-outline" data-translate="Intentar parchar el firmware de los PLC afectados.">Intentar parchar el firmware de los PLC afectados.</button>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<style>
+    .narrativa-detail { max-width: 800px; margin: 0 auto; padding: 2rem 0; }
+    .breadcrumb { margin-bottom: 2rem; font-size: 0.9rem; color: var(--text-muted); }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .narrativa-header h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+    .narrativa-meta { display: flex; gap: 10px; margin-bottom: 3rem; }
+    .badge { padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+    .badge-dark { background: rgba(0, 0, 0, 0.2); color: #2f3542; border: 1px solid #2f3542; }
+    .badge-danger { background: rgba(255, 71, 87, 0.1); color: #ff4757; border: 1px solid #ff4757; }
+    .narrativa-section { margin-bottom: 3rem; }
+    .narrativa-section h2 { color: var(--accent); margin-bottom: 1.5rem; font-size: 1.5rem; }
+    .narrativa-section p { line-height: 1.8; color: var(--text-main); font-size: 1.1rem; }
+    .code-terminal { background: #1e1e1e; color: #d4d4d4; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; font-family: 'Courier New', Courier, monospace; }
+    .decision-box { background: var(--bg-card); border: 2px dashed var(--accent); padding: 2rem; border-radius: 12px; margin-top: 2rem; }
+    .decision-box p { font-weight: 700; margin-bottom: 1.5rem; }
+    .decision-options { display: flex; flex-direction: column; gap: 1rem; }
+    .btn-outline { border: 1px solid var(--border-color); background: transparent; color: var(--text-main); text-align: left; padding: 1rem; transition: all 0.2s; }
+    .btn-outline:hover { background: var(--accent); color: white; border-color: var(--accent); }
+</style>
+{% endblock %}

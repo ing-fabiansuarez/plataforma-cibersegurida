@@ -1,0 +1,541 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Narrativas" %} — CyberLearn{% endblock %}
+
+{% block content %}
+
+<!-- Animated scanline overlay -->
+<div class="scanline-overlay"></div>
+
+<div class="narrativas-container">
+
+    <!-- Header con efecto terminal -->
+    <div class="narrativas-header">
+        <div class="terminal-header">
+            <div class="terminal-dots">
+                <span class="dot dot-red"></span>
+                <span class="dot dot-yellow"></span>
+                <span class="dot dot-green"></span>
+            </div>
+            <span class="terminal-path">~/chats/narrativas</span>
+        </div>
+        <div class="header-body">
+            <div class="header-badge">
+                <i class="fas fa-shield-alt"></i>
+                <span>MÓDULO NARRATIVAS</span>
+            </div>
+            <h1 class="glitch-title" data-text="Narrativas de Ciberseguridad">
+                Narrativas de Ciberseguridad
+            </h1>
+            <p class="header-desc" data-translate="Explora escenarios reales y simulados diseñados para poner a prueba tus conocimientos y habilidades en entornos controlados.">
+                Explora escenarios reales y simulados diseñados para poner a prueba tus conocimientos y habilidades en entornos controlados.
+            </p>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <i class="fas fa-book-open"></i>
+                    <span>4 Narrativas</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span>Acceso Externo</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-lock"></i>
+                    <span>Nivel Variable</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grid de Narrativas -->
+    <div class="narrativas-grid">
+
+        <!-- Narrativa 1 -->
+        <a href="https://sites.google.com/view/cybercsi/inicio" target="_blank" class="narrativa-card">
+            <div class="card-glow card-glow-cyan"></div>
+            <div class="narrativa-card-image">
+                <img src="{% static 'img/black_shadows.png' %}" alt="Black Shadows">
+                <div class="img-overlay"></div>
+                <div class="card-badge badge-forensic">
+                    <i class="fas fa-search"></i> Forense
+                </div>
+                <div class="external-indicator"><i class="fas fa-external-link-alt"></i></div>
+            </div>
+            <div class="narrativa-info">
+                <div class="narrativa-tag">
+                    <span class="tag-dot tag-cyan"></span>
+                    <span>ANÁLISIS FORENSE</span>
+                </div>
+                <h3 data-translate="Cazadores de evidencia digital: Primeros pasos en informática forense">
+                    Cazadores de evidencia digital: Primeros pasos en informática forense
+                </h3>
+                <p data-translate="Sigue el rastro de las sombras digitales en esta introducción al análisis forense.">
+                    Sigue el rastro de las sombras digitales en esta introducción al análisis forense.
+                </p>
+                <div class="card-footer">
+                    <span class="btn-narrativa" data-translate="Explorar">
+                        <i class="fas fa-terminal"></i> Explorar <i class="fas fa-chevron-right"></i>
+                    </span>
+                </div>
+            </div>
+        </a>
+
+        <!-- Narrativa 2 -->
+        <a href="https://sites.google.com/unab.edu.co/arcanacognitum/inicio?pli=1&authuser=2" target="_blank" class="narrativa-card">
+            <div class="card-glow card-glow-purple"></div>
+            <div class="narrativa-card-image">
+                <img src="{% static 'img/arcana_cognitum.png' %}" alt="Arcana Cognitum">
+                <div class="img-overlay"></div>
+                <div class="card-badge badge-arcana">
+                    <i class="fas fa-book-dead"></i> Arcana
+                </div>
+                <div class="external-indicator"><i class="fas fa-external-link-alt"></i></div>
+            </div>
+            <div class="narrativa-info">
+                <div class="narrativa-tag">
+                    <span class="tag-dot tag-purple"></span>
+                    <span>CONOCIMIENTO TEC.</span>
+                </div>
+                <h3 data-translate="Arcana Cognitum: Los siete reinos del conocimiento tecnologico">
+                    Arcana Cognitum: Los siete reinos del conocimiento tecnologico
+                </h3>
+                <p data-translate="Explora los siete reinos del conocimiento tecnológico a través de esta experiencia mística.">
+                    Explora los siete reinos del conocimiento tecnológico a través de esta experiencia mística.
+                </p>
+                <div class="card-footer">
+                    <span class="btn-narrativa" data-translate="Explorar">
+                        <i class="fas fa-terminal"></i> Explorar <i class="fas fa-chevron-right"></i>
+                    </span>
+                </div>
+            </div>
+        </a>
+
+        <!-- Narrativa 3 -->
+        <a href="https://sites.google.com/unab.edu.co/aprendiendociberseguridad/inicio" target="_blank" class="narrativa-card">
+            <div class="card-glow card-glow-blue"></div>
+            <div class="narrativa-card-image">
+                <img src="{% static 'img/cyberguardians_agency.png' %}" alt="Agencia Cyberguardians">
+                <div class="img-overlay"></div>
+                <div class="card-badge badge-agency">
+                    <i class="fas fa-user-shield"></i> Agencia
+                </div>
+                <div class="external-indicator"><i class="fas fa-external-link-alt"></i></div>
+            </div>
+            <div class="narrativa-info">
+                <div class="narrativa-tag">
+                    <span class="tag-dot tag-blue"></span>
+                    <span>DEFENSA DIGITAL</span>
+                </div>
+                <h3 data-translate="AGENCIA CYBERGUARDIANS">AGENCIA CYBERGUARDIANS</h3>
+                <p data-translate="Únete a la elite de protectores digitales y defiende la red de amenazas globales.">
+                    Únete a la elite de protectores digitales y defiende la red de amenazas globales.
+                </p>
+                <div class="card-footer">
+                    <span class="btn-narrativa" data-translate="Explorar">
+                        <i class="fas fa-terminal"></i> Explorar <i class="fas fa-chevron-right"></i>
+                    </span>
+                </div>
+            </div>
+        </a>
+
+        <!-- Narrativa 4 -->
+        <a href="https://view.genially.com/69c464165e540c028c4261b2" target="_blank" class="narrativa-card">
+            <div class="card-glow card-glow-green"></div>
+            <div class="narrativa-card-image">
+                <img src="{% static 'img/cyberguardians_hub.png' %}" alt="cyberguardians">
+                <div class="img-overlay"></div>
+                <div class="card-badge badge-hub">
+                    <i class="fas fa-network-wired"></i> Hub
+                </div>
+                <div class="external-indicator"><i class="fas fa-external-link-alt"></i></div>
+            </div>
+            <div class="narrativa-info">
+                <div class="narrativa-tag">
+                    <span class="tag-dot tag-green"></span>
+                    <span>INTERACTIVO</span>
+                </div>
+                <h3 data-translate="cyberguardians">cyberguardians</h3>
+                <p data-translate="Explora recursos interactivos y aprende sobre el mundo de la ciberseguridad.">
+                    Explora recursos interactivos y aprende sobre el mundo de la ciberseguridad.
+                </p>
+                <div class="card-footer">
+                    <span class="btn-narrativa" data-translate="Explorar">
+                        <i class="fas fa-terminal"></i> Explorar <i class="fas fa-chevron-right"></i>
+                    </span>
+                </div>
+            </div>
+        </a>
+
+    </div>
+</div>
+
+<style>
+    /* =============================================
+       ANIMACIÓN SCANLINE DE FONDO
+    ============================================= */
+    .scanline-overlay {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        pointer-events: none;
+        z-index: 0;
+        background: repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 255, 170, 0.015) 2px,
+            rgba(0, 255, 170, 0.015) 4px
+        );
+        animation: scanlines 8s linear infinite;
+    }
+    @keyframes scanlines {
+        0% { background-position: 0 0; }
+        100% { background-position: 0 100px; }
+    }
+
+    /* =============================================
+       CONTENEDOR PRINCIPAL
+    ============================================= */
+    .narrativas-container {
+        padding: 2rem 0 4rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* =============================================
+       HEADER ESTILO TERMINAL
+    ============================================= */
+    .narrativas-header {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+        position: relative;
+    }
+    .narrativas-header::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #00ffaa, #0066ff, #aa00ff, #00ffaa);
+        background-size: 300% 100%;
+        animation: gradientShift 4s linear infinite;
+    }
+    @keyframes gradientShift {
+        0% { background-position: 0% 0%; }
+        100% { background-position: 300% 0%; }
+    }
+    .terminal-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.6rem 1.2rem;
+        background: rgba(0,0,0,0.2);
+        border-bottom: 1px solid var(--border-color);
+        font-family: 'Courier New', monospace;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+    }
+    .terminal-dots { display: flex; gap: 6px; }
+    .dot {
+        width: 12px; height: 12px;
+        border-radius: 50%;
+    }
+    .dot-red { background: #ff5f57; }
+    .dot-yellow { background: #febc2e; }
+    .dot-green { background: #28c840; }
+    .terminal-path { opacity: 0.6; }
+
+    .header-body {
+        padding: 2rem 2.5rem;
+    }
+    .header-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(0, 255, 170, 0.1);
+        border: 1px solid rgba(0, 255, 170, 0.3);
+        color: #00ffaa;
+        padding: 0.3rem 0.9rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        margin-bottom: 1rem;
+    }
+
+    /* Glitch title effect */
+    .glitch-title {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: var(--text-main);
+        margin-bottom: 0.8rem;
+        line-height: 1.2;
+        position: relative;
+    }
+    .glitch-title::before,
+    .glitch-title::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+    }
+    .glitch-title::before {
+        color: #00ffaa;
+        clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+        transform: translate(-2px, 0);
+        animation: glitch-top 5s infinite linear;
+        opacity: 0;
+    }
+    .glitch-title::after {
+        color: #ff00ff;
+        clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+        transform: translate(2px, 0);
+        animation: glitch-bottom 5s infinite linear;
+        opacity: 0;
+    }
+    @keyframes glitch-top {
+        0%, 90%, 100% { opacity: 0; transform: translate(0,0); }
+        92% { opacity: 0.8; transform: translate(-3px, -2px); }
+        94% { opacity: 0.8; transform: translate(3px, 0); }
+        96% { opacity: 0; }
+    }
+    @keyframes glitch-bottom {
+        0%, 90%, 100% { opacity: 0; transform: translate(0,0); }
+        92% { opacity: 0.8; transform: translate(3px, 2px); }
+        94% { opacity: 0.8; transform: translate(-3px, 0); }
+        96% { opacity: 0; }
+    }
+
+    .header-desc {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        line-height: 1.6;
+        max-width: 650px;
+        margin-bottom: 1.5rem;
+    }
+    .header-stats {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+    }
+    .stat-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        font-weight: 500;
+    }
+    .stat-item i { color: #00ffaa; }
+
+    /* =============================================
+       GRID DE NARRATIVAS
+    ============================================= */
+    .narrativas-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+
+    /* =============================================
+       TARJETAS DE NARRATIVA
+    ============================================= */
+    .narrativa-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow: hidden;
+        isolation: isolate;
+    }
+    .narrativa-card:hover {
+        transform: translateY(-8px) scale(1.01);
+        border-color: transparent;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    /* Glow effect por card */
+    .card-glow {
+        position: absolute;
+        inset: 0;
+        border-radius: 14px;
+        opacity: 0;
+        transition: opacity 0.35s;
+        pointer-events: none;
+        z-index: -1;
+    }
+    .narrativa-card:hover .card-glow { opacity: 1; }
+    .card-glow-cyan  { box-shadow: 0 0 0 2px #00ffaa, 0 20px 60px rgba(0,255,170,0.2); }
+    .card-glow-purple{ box-shadow: 0 0 0 2px #aa00ff, 0 20px 60px rgba(170,0,255,0.2); }
+    .card-glow-blue  { box-shadow: 0 0 0 2px #0088ff, 0 20px 60px rgba(0,136,255,0.2); }
+    .card-glow-green { box-shadow: 0 0 0 2px #00dd88, 0 20px 60px rgba(0,221,136,0.2); }
+
+    /* =============================================
+       IMAGEN DE LA TARJETA
+    ============================================= */
+    .narrativa-card-image {
+        height: 200px;
+        position: relative;
+        overflow: hidden;
+    }
+    .narrativa-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+        filter: saturate(0.8);
+    }
+    .narrativa-card:hover .narrativa-card-image img {
+        transform: scale(1.08);
+        filter: saturate(1.1);
+    }
+    .img-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+    }
+
+    /* Badge en imagen */
+    .card-badge {
+        position: absolute;
+        bottom: 10px;
+        left: 12px;
+        padding: 0.25rem 0.7rem;
+        border-radius: 20px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        backdrop-filter: blur(8px);
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+    .badge-forensic { background: rgba(0,255,170,0.2); color: #00ffaa; border: 1px solid rgba(0,255,170,0.4); }
+    .badge-arcana   { background: rgba(170,0,255,0.2); color: #cc77ff; border: 1px solid rgba(170,0,255,0.4); }
+    .badge-agency   { background: rgba(0,136,255,0.2); color: #55aaff; border: 1px solid rgba(0,136,255,0.4); }
+    .badge-hub      { background: rgba(0,221,136,0.2); color: #00dd88; border: 1px solid rgba(0,221,136,0.4); }
+
+    /* Icono externo */
+    .external-indicator {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(0,0,0,0.55);
+        color: rgba(255,255,255,0.8);
+        width: 28px; height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        backdrop-filter: blur(6px);
+        border: 1px solid rgba(255,255,255,0.15);
+        transition: all 0.3s;
+    }
+    .narrativa-card:hover .external-indicator {
+        background: rgba(0,255,170,0.3);
+        border-color: #00ffaa;
+        color: #00ffaa;
+    }
+
+    /* =============================================
+       INFO DE LA TARJETA
+    ============================================= */
+    .narrativa-info {
+        padding: 1.4rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    .narrativa-tag {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        color: var(--text-muted);
+        margin-bottom: 0.6rem;
+    }
+    .tag-dot {
+        width: 7px; height: 7px;
+        border-radius: 50%;
+        animation: pulse-dot 2s infinite;
+    }
+    .tag-cyan   { background: #00ffaa; box-shadow: 0 0 6px #00ffaa; }
+    .tag-purple { background: #aa00ff; box-shadow: 0 0 6px #aa00ff; }
+    .tag-blue   { background: #0088ff; box-shadow: 0 0 6px #0088ff; }
+    .tag-green  { background: #00dd88; box-shadow: 0 0 6px #00dd88; }
+    @keyframes pulse-dot {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.4); opacity: 0.7; }
+    }
+
+    .narrativa-info h3 {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--text-main);
+        line-height: 1.4;
+        margin-bottom: 0.6rem;
+    }
+    .narrativa-info p {
+        font-size: 0.88rem;
+        color: var(--text-muted);
+        line-height: 1.55;
+        flex: 1;
+        margin-bottom: 1.2rem;
+    }
+
+    /* =============================================
+       PIE DE TARJETA Y BOTÓN
+    ============================================= */
+    .card-footer {
+        border-top: 1px solid var(--border-color);
+        padding-top: 1rem;
+        margin-top: auto;
+    }
+    .btn-narrativa {
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: var(--accent);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        letter-spacing: 0.03em;
+        transition: all 0.25s ease;
+    }
+    .btn-narrativa .fa-chevron-right {
+        font-size: 0.7rem;
+        transition: transform 0.25s ease;
+    }
+    .narrativa-card:hover .btn-narrativa {
+        gap: 0.8rem;
+    }
+    .narrativa-card:hover .btn-narrativa .fa-chevron-right {
+        transform: translateX(4px);
+    }
+
+    /* =============================================
+       RESPONSIVE
+    ============================================= */
+    @media (max-width: 768px) {
+        .narrativas-grid { grid-template-columns: 1fr 1fr; }
+        .glitch-title { font-size: 1.6rem; }
+        .header-stats { gap: 1rem; }
+        .header-body { padding: 1.5rem; }
+    }
+    @media (max-width: 500px) {
+        .narrativas-grid { grid-template-columns: 1fr; }
+    }
+</style>
+
+{% endblock %}

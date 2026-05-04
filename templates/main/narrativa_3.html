@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Fuga de Datos" %} — Narrativa{% endblock %}
+
+{% block content %}
+<div class="narrativa-detail">
+    <nav class="breadcrumb">
+        <a href="{% url 'narrativas_list' %}" data-translate="Narrativas">Narrativas</a> / 
+        <span data-translate="Fuga de Datos">Fuga de Datos</span>
+    </nav>
+
+    <div class="narrativa-header">
+        <h1 data-translate="Fuga de Datos">Fuga de Datos</h1>
+        <div class="narrativa-meta">
+            <span class="badge badge-success" data-translate="Nivel: Fácil">Nivel: Fácil</span>
+            <span class="badge badge-secondary" data-translate="Categoría: Análisis Forense">Categoría: Análisis Forense</span>
+        </div>
+    </div>
+
+    <div class="narrativa-body">
+        <section class="narrativa-section">
+            <h2 data-translate="El Incidente">El Incidente</h2>
+            <p data-translate="El CEO de una startup tecnológica acaba de recibir un correo anónimo con una lista de los últimos 500 clientes y sus números de tarjeta de crédito. Te han contratado para descubrir por dónde se filtró la información antes de que los medios se enteren.">
+                El CEO de una startup tecnológica acaba de recibir un correo anónimo con una lista de los últimos 500 clientes y sus números de tarjeta de crédito. Te han contratado para descubrir por dónde se filtró la información antes de que los medios se enteren.
+            </p>
+        </section>
+
+        <section class="narrativa-section">
+            <h2 data-translate="Logs del Servidor Web">Logs del Servidor Web</h2>
+            <div class="code-terminal">
+                <pre>
+192.168.1.45 - - [04/May/2026:10:15:30] "GET /api/users?id=1' OR '1'='1" 200 4521
+192.168.1.45 - - [04/May/2026:10:15:35] "GET /api/users?id=1 UNION SELECT name, card_num FROM customers" 200 12540
+                </pre>
+            </div>
+            <p data-translate="Los logs parecen indicar un ataque clásico pero efectivo.">
+                Los logs parecen indicar un ataque clásico pero efectivo.
+            </p>
+        </section>
+
+        <section class="narrativa-section">
+            <h2 data-translate="Tu Conclusión">Tu Conclusión</h2>
+            <div class="decision-box">
+                <p data-translate="¿Qué tipo de vulnerabilidad fue explotada?">¿Qué tipo de vulnerabilidad fue explotada?</p>
+                <div class="decision-options">
+                    <button class="btn btn-outline" data-translate="Cross-Site Scripting (XSS)">Cross-Site Scripting (XSS)</button>
+                    <button class="btn btn-outline" data-translate="SQL Injection (SQLi)">SQL Injection (SQLi)</button>
+                    <button class="btn btn-outline" data-translate="Insecure Direct Object Reference (IDOR)">Insecure Direct Object Reference (IDOR)</button>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<style>
+    .narrativa-detail { max-width: 800px; margin: 0 auto; padding: 2rem 0; }
+    .breadcrumb { margin-bottom: 2rem; font-size: 0.9rem; color: var(--text-muted); }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .narrativa-header h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+    .narrativa-meta { display: flex; gap: 10px; margin-bottom: 3rem; }
+    .badge { padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+    .badge-success { background: rgba(46, 213, 115, 0.1); color: #2ed573; border: 1px solid #2ed573; }
+    .badge-secondary { background: rgba(112, 161, 255, 0.1); color: #70a1ff; border: 1px solid #70a1ff; }
+    .narrativa-section { margin-bottom: 3rem; }
+    .narrativa-section h2 { color: var(--accent); margin-bottom: 1.5rem; font-size: 1.5rem; }
+    .narrativa-section p { line-height: 1.8; color: var(--text-main); font-size: 1.1rem; }
+    .code-terminal { background: #1e1e1e; color: #d4d4d4; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; font-family: 'Courier New', Courier, monospace; }
+    .decision-box { background: var(--bg-card); border: 2px dashed var(--accent); padding: 2rem; border-radius: 12px; margin-top: 2rem; }
+    .decision-box p { font-weight: 700; margin-bottom: 1.5rem; }
+    .decision-options { display: flex; flex-direction: column; gap: 1rem; }
+    .btn-outline { border: 1px solid var(--border-color); background: transparent; color: var(--text-main); text-align: left; padding: 1rem; transition: all 0.2s; }
+    .btn-outline:hover { background: var(--accent); color: white; border-color: var(--accent); }
+</style>
+{% endblock %}
