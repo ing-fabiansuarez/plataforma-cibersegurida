@@ -21,6 +21,7 @@ urlpatterns = [
     
     # Scoreboard
     path('podio/', views.scoreboard, name='scoreboard'),
+    path('dashboard/', views.platform_dashboard, name='platform_dashboard'),
 
     # User Profile
     path('profile/', views.user_profile, name='user_profile'),

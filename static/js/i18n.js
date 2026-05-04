@@ -123,6 +123,7 @@ class I18nManager {
                 
                 // Narrativas
                 'Narrativas': 'Narrativas',
+                'Dashboard': 'Dashboard',
                 'Ranking': 'Ranking',
                 'Retos': 'Retos',
                 'Experiencias Inmersivas': 'Experiencias Inmersivas',

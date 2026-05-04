@@ -239,8 +239,8 @@ def scoreboard(request):
 def user_profile(request, username=None):
     if username:
         from django.contrib.auth import get_user_model
-        User = get_user_model()
-        user = get_object_or_404(User, username=username)
+        user_model = get_user_model()
+        user = get_object_or_404(user_model, username=username)
     elif request.user.is_authenticated:
         user = request.user
     else:
@@ -280,3 +280,82 @@ def user_profile(request, username=None):
         'locked_badges': locked_badges,
         'category_mastery': category_mastery,
     })
+
+def platform_dashboard(request):
+    from django.db.models import Count, Sum, Q, Avg
+    from django.db.models.functions import TruncDate
+    from django.utils import timezone
+    from datetime import timedelta
+    
+    # Global Stats
+    total_users = StudentProgress.objects.count()
+    total_challenges = Challenge.objects.filter(is_published=True).count()
+    total_submissions = Submission.objects.count()
+    correct_submissions = Submission.objects.filter(is_correct=True).count()
+    success_rate = (correct_submissions / total_submissions * 100) if total_submissions > 0 else 0
+    
+    # Points and XP
+    total_points_platform = StudentProgress.objects.aggregate(Sum('total_points'))['total_points__sum'] or 0
+    avg_level = StudentProgress.objects.aggregate(Avg('level'))['level__avg'] or 1
+    
+    # Category Distribution
+    categories_data = Challenge.objects.filter(is_published=True).values('category').annotate(
+        count=Count('id'),
+        solves=Count('solvers')
+    )
+    
+    # --- NEW STATS ---
+    
+    # 1. Submission Trends (Last 30 Days)
+    thirty_days_ago = timezone.now() - timedelta(days=30)
+    submission_trends = Submission.objects.filter(solved_at__gte=thirty_days_ago) \
+        .annotate(date=TruncDate('solved_at')) \
+        .values('date') \
+        .annotate(count=Count('id'), correct=Count('id', filter=Q(is_correct=True))) \
+        .order_by('date')
+    
+    # 2. Level Distribution
+    level_dist = StudentProgress.objects.values('level').annotate(count=Count('id')).order_by('level')
+    
+    # 3. Badge Statistics
+    badge_stats = Badge.objects.annotate(earned_count=Count('awarded_to')).order_by('-earned_count')
+    
+    # 4. Success Rate by Difficulty
+    difficulty_stats = Challenge.objects.values('difficulty').annotate(
+        total_attempts=Count('submissions'),
+        correct_attempts=Count('submissions', filter=Q(submissions__is_correct=True))
+    ).order_by('difficulty')
+    for stat in difficulty_stats:
+        stat['rate'] = (stat['correct_attempts'] / stat['total_attempts'] * 100) if stat['total_attempts'] > 0 else 0
+    
+    # ------------------
+    
+    # Recent Activity (last 7 days count)
+    last_week = timezone.now() - timedelta(days=7)
+    recent_activity_count = Submission.objects.filter(solved_at__gte=last_week).count()
+    
+    # Recent Submissions for the feed
+    recent_submissions = Submission.objects.select_related('user', 'challenge').order_by('-solved_at')[:10]
+    
+    # Top 5 Challenges (most solved)
+    top_challenges = Challenge.objects.annotate(solve_count=Count('solvers')).order_by('-solve_count')[:5]
+    
+    context = {
+        'total_users': total_users,
+        'total_challenges': total_challenges,
+        'total_submissions': total_submissions,
+        'correct_submissions': correct_submissions,
+        'success_rate': round(success_rate, 1),
+        'total_points_platform': total_points_platform,
+        'avg_level': round(avg_level, 1),
+        'categories_data': categories_data,
+        'submission_trends': list(submission_trends),
+        'level_dist': list(level_dist),
+        'badge_stats': badge_stats,
+        'difficulty_stats': difficulty_stats,
+        'recent_activity': recent_activity_count,
+        'recent_submissions': recent_submissions,
+        'top_challenges': top_challenges,
+    }
+    
+    return render(request, 'challenges/dashboard.html', context)
