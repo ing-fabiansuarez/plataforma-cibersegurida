@@ -229,12 +229,22 @@ def challenge_detail(request, pk):
         'solve_count': solve_count
     })
 
-@login_required
+def scoreboard(request):
+    # Obtener todos los estudiantes basado en puntos totales
+    top_students = StudentProgress.objects.select_related('user').order_by('-total_points', '-xp')
+    return render(request, 'users/scoreboard.html', {
+        'top_students': top_students
+    })
+
 def user_profile(request, username=None):
     if username:
-        user = get_object_or_404(settings.AUTH_USER_MODEL, username=username)
-    else:
+        from django.contrib.auth import get_user_model
+        User = get_user_model()
+        user = get_object_or_404(User, username=username)
+    elif request.user.is_authenticated:
         user = request.user
+    else:
+        return redirect('login')
     
     progress, _ = StudentProgress.objects.get_or_create(user=user)
     earned_badges = UserBadge.objects.filter(user=user).select_related('badge').order_by('-earned_at')

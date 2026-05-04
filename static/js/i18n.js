@@ -123,6 +123,8 @@ class I18nManager {
                 
                 // Narrativas
                 'Narrativas': 'Narrativas',
+                'Ranking': 'Ranking',
+                'Retos': 'Retos',
                 'Experiencias Inmersivas': 'Experiencias Inmersivas',
                 'Narrativas de Ciberseguridad': 'Narrativas de Ciberseguridad',
                 'Explora escenarios reales y simulados diseñados para poner a prueba tus conocimientos y habilidades en entornos controlados.': 'Explora escenarios reales y simulados diseñados para poner a prueba tus conocimientos y habilidades en entornos controlados.',
@@ -286,6 +288,8 @@ class I18nManager {
 
                 // Narrativas
                 'Narrativas': 'Narratives',
+                'Ranking': 'Ranking',
+                'Retos': 'Challenges',
                 'Experiencias Inmersivas': 'Immersive Experiences',
                 'Narrativas de Ciberseguridad': 'Cybersecurity Narratives',
                 'Explora escenarios reales y simulados diseñados para poner a prueba tus conocimientos y habilidades en entornos controlados.': 'Explore real and simulated scenarios designed to test your knowledge and skills in controlled environments.',

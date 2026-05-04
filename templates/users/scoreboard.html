@@ -1,0 +1,440 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Ranking" %} — CyberLearn{% endblock %}
+
+{% block content %}
+
+<div class="ranking-page">
+
+    <!-- Compact header -->
+    <div class="ranking-top-bar">
+        <div class="rtb-left">
+            <i class="fas fa-crown rtb-icon"></i>
+            <div>
+                <h1>Ranking</h1>
+                <span class="rtb-sub">{{ top_students|length }} participantes activos</span>
+            </div>
+        </div>
+    </div>
+
+    {% if top_students|length >= 3 %}
+    <!-- Podium (Top 3) -->
+    <div class="podium-section">
+        <div class="podium-wrapper">
+            <!-- 2nd Place -->
+            {% with p=top_students.1 %}
+            <div class="podium-slot slot-silver">
+                <a href="{% url 'user_profile_public' p.user.username %}" class="podium-link">
+                    <div class="podium-medal silver-medal"><span>2</span></div>
+                    <div class="podium-avatar-ring silver-ring">
+                        {% if p.user.avatar %}
+                            <img src="{{ p.user.avatar.url }}" alt="{{ p.user.username }}">
+                        {% else %}
+                            <div class="avatar-fallback"><i class="fas fa-user-astronaut"></i></div>
+                        {% endif %}
+                    </div>
+                    <h3 class="podium-name">{{ p.user.username }}</h3>
+                    <div class="podium-score">{{ p.total_points }} <small>pts</small></div>
+                    <div class="podium-level">Nivel {{ p.level }} · {{ p.solved_challenges.count }} retos</div>
+                </a>
+                <div class="podium-pedestal pedestal-silver"><span>2°</span></div>
+            </div>
+            {% endwith %}
+
+            <!-- 1st Place -->
+            {% with p=top_students.0 %}
+            <div class="podium-slot slot-gold">
+                <a href="{% url 'user_profile_public' p.user.username %}" class="podium-link">
+                    <div class="podium-crown"><i class="fas fa-crown"></i></div>
+                    <div class="podium-avatar-ring gold-ring">
+                        {% if p.user.avatar %}
+                            <img src="{{ p.user.avatar.url }}" alt="{{ p.user.username }}">
+                        {% else %}
+                            <div class="avatar-fallback gold-fb"><i class="fas fa-user-astronaut"></i></div>
+                        {% endif %}
+                    </div>
+                    <h3 class="podium-name">{{ p.user.username }}</h3>
+                    <div class="podium-score gold-score">{{ p.total_points }} <small>pts</small></div>
+                    <div class="podium-level">Nivel {{ p.level }} · {{ p.solved_challenges.count }} retos</div>
+                </a>
+                <div class="podium-pedestal pedestal-gold"><span>1°</span></div>
+            </div>
+            {% endwith %}
+
+            <!-- 3rd Place -->
+            {% with p=top_students.2 %}
+            <div class="podium-slot slot-bronze">
+                <a href="{% url 'user_profile_public' p.user.username %}" class="podium-link">
+                    <div class="podium-medal bronze-medal"><span>3</span></div>
+                    <div class="podium-avatar-ring bronze-ring">
+                        {% if p.user.avatar %}
+                            <img src="{{ p.user.avatar.url }}" alt="{{ p.user.username }}">
+                        {% else %}
+                            <div class="avatar-fallback"><i class="fas fa-user-astronaut"></i></div>
+                        {% endif %}
+                    </div>
+                    <h3 class="podium-name">{{ p.user.username }}</h3>
+                    <div class="podium-score">{{ p.total_points }} <small>pts</small></div>
+                    <div class="podium-level">Nivel {{ p.level }} · {{ p.solved_challenges.count }} retos</div>
+                </a>
+                <div class="podium-pedestal pedestal-bronze"><span>3°</span></div>
+            </div>
+            {% endwith %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Full Ranking Table -->
+    <div class="ranking-list-section">
+        <div class="ranking-list-header">
+            <h2><i class="fas fa-list-ol"></i> Clasificación Completa</h2>
+        </div>
+        <div class="ranking-list-table">
+            <div class="rlt-head">
+                <span class="rlt-col col-pos">#</span>
+                <span class="rlt-col col-player">Jugador</span>
+                <span class="rlt-col col-lvl">Nivel</span>
+                <span class="rlt-col col-solved">Retos</span>
+                <span class="rlt-col col-pts">Puntos</span>
+                <span class="rlt-col col-act"></span>
+            </div>
+            {% for progress in top_students %}
+            <div class="rlt-row {% if forloop.counter == 1 %}rlt-gold{% elif forloop.counter == 2 %}rlt-silver{% elif forloop.counter == 3 %}rlt-bronze{% endif %}">
+                <span class="rlt-col col-pos">
+                    {% if forloop.counter == 1 %}
+                        <span class="medal-icon gold"><i class="fas fa-trophy"></i></span>
+                    {% elif forloop.counter == 2 %}
+                        <span class="medal-icon silver"><i class="fas fa-medal"></i></span>
+                    {% elif forloop.counter == 3 %}
+                        <span class="medal-icon bronze"><i class="fas fa-medal"></i></span>
+                    {% else %}
+                        <span class="pos-num">{{ forloop.counter }}</span>
+                    {% endif %}
+                </span>
+                <span class="rlt-col col-player">
+                    <div class="player-info">
+                        {% if progress.user.avatar %}
+                            <img src="{{ progress.user.avatar.url }}" class="player-avatar">
+                        {% else %}
+                            <div class="player-avatar-ph"><i class="fas fa-user"></i></div>
+                        {% endif %}
+                        <span class="player-name">{{ progress.user.username }}</span>
+                    </div>
+                </span>
+                <span class="rlt-col col-lvl">
+                    <span class="lvl-chip">{{ progress.level }}</span>
+                </span>
+                <span class="rlt-col col-solved">
+                    <span class="solved-count">{{ progress.solved_challenges.count }}</span>
+                </span>
+                <span class="rlt-col col-pts">
+                    <span class="pts-val">{{ progress.total_points }}</span>
+                </span>
+                <span class="rlt-col col-act">
+                    <a href="{% url 'user_profile_public' progress.user.username %}" class="view-btn" title="Ver perfil">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </span>
+            </div>
+            {% empty %}
+            <div class="rlt-empty">
+                <i class="fas fa-ghost"></i>
+                <p>Aún no hay participantes en el ranking. ¡Sé el primero en resolver un reto!</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .ranking-page { padding-bottom: 4rem; }
+
+    /* ── TOP BAR ── */
+    .ranking-top-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+    }
+    .rtb-left {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+    }
+    .rtb-icon {
+        font-size: 1.4rem;
+        color: #ffcc00;
+    }
+    .ranking-top-bar h1 {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--text-main);
+        margin: 0;
+        line-height: 1.2;
+    }
+    .rtb-sub {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+    }
+
+    /* ── PODIUM ── */
+    .podium-section { margin-bottom: 2.5rem; }
+    .podium-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1.15fr 1fr;
+        gap: 1.2rem;
+        max-width: 720px;
+        margin: 0 auto;
+        align-items: flex-end;
+    }
+    .podium-slot {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .podium-link {
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: transform 0.25s;
+    }
+    .podium-link:hover { transform: translateY(-6px); }
+
+    .podium-crown {
+        color: #ffcc00;
+        font-size: 1.3rem;
+        margin-bottom: 0.2rem;
+        filter: drop-shadow(0 0 8px rgba(255,204,0,0.4));
+        animation: crownFloat 3s ease-in-out infinite;
+    }
+    @keyframes crownFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-4px); }
+    }
+    .podium-medal {
+        width: 26px; height: 26px;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-weight: 800; font-size: 0.75rem;
+        margin-bottom: 0.4rem;
+    }
+    .silver-medal { background: rgba(192,192,192,0.15); color: #c0c0c0; border: 1px solid rgba(192,192,192,0.3); }
+    .bronze-medal { background: rgba(205,127,50,0.15); color: #cd7f32; border: 1px solid rgba(205,127,50,0.3); }
+
+    .podium-avatar-ring {
+        width: 100px; height: 100px;
+        border-radius: 50%;
+        padding: 4px;
+        margin-bottom: 0.8rem;
+    }
+    .slot-gold .podium-avatar-ring { width: 130px; height: 130px; }
+    .gold-ring { background: linear-gradient(135deg, #ffcc00, #ff9500, #ffcc00); box-shadow: 0 0 35px rgba(255,204,0,0.3); }
+    .silver-ring { background: linear-gradient(135deg, #a8a8a8, #d4d4d4, #a8a8a8); box-shadow: 0 0 20px rgba(192,192,192,0.2); }
+    .bronze-ring { background: linear-gradient(135deg, #cd7f32, #e0a060, #cd7f32); box-shadow: 0 0 20px rgba(205,127,50,0.2); }
+    .podium-avatar-ring img,
+    .podium-avatar-ring .avatar-fallback {
+        width: 100%; height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        background: var(--bg-body);
+        border: 4px solid var(--bg-body);
+    }
+    .avatar-fallback {
+        display: flex; align-items: center; justify-content: center;
+        font-size: 2.2rem; color: var(--text-muted);
+    }
+    .gold-fb { color: #ffcc00 !important; font-size: 3rem !important; }
+
+    .podium-name { font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.15rem; }
+    .podium-score { font-size: 1.8rem; font-weight: 800; color: var(--text-main); line-height: 1; }
+    .podium-score small { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); }
+    .gold-score { color: #ffcc00 !important; }
+    .podium-level {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--text-muted);
+        margin-top: 0.4rem;
+        font-weight: 600;
+    }
+
+    .podium-pedestal {
+        width: 100%;
+        margin-top: 1rem;
+        border-radius: 12px 12px 0 0;
+        display: flex; align-items: flex-end; justify-content: center;
+        padding-bottom: 0.8rem;
+        font-size: 1.8rem; font-weight: 900;
+        color: rgba(255,255,255,0.1);
+    }
+    .pedestal-gold {
+        height: 140px;
+        background: linear-gradient(180deg, rgba(255,204,0,0.18) 0%, rgba(255,204,0,0.03) 100%);
+        border: 1px solid rgba(255,204,0,0.2);
+        border-bottom: none;
+    }
+    .pedestal-silver {
+        height: 100px;
+        background: linear-gradient(180deg, rgba(192,192,192,0.12) 0%, rgba(192,192,192,0.01) 100%);
+        border: 1px solid rgba(192,192,192,0.15);
+        border-bottom: none;
+    }
+    .pedestal-bronze {
+        height: 80px;
+        background: linear-gradient(180deg, rgba(205,127,50,0.12) 0%, rgba(205,127,50,0.01) 100%);
+        border: 1px solid rgba(205,127,50,0.15);
+        border-bottom: none;
+    }
+
+    /* ── TABLE ── */
+    .ranking-list-section {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        overflow: hidden;
+    }
+    .ranking-list-header {
+        padding: 1.2rem 1.8rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .ranking-list-header h2 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text-main);
+        display: flex; align-items: center; gap: 0.5rem;
+        margin: 0;
+    }
+    .ranking-list-header h2 i { color: var(--accent); font-size: 0.9rem; }
+
+    .rlt-head, .rlt-row {
+        display: grid;
+        grid-template-columns: 55px 1fr 70px 70px 90px 44px;
+        align-items: center;
+        padding: 0 1.8rem;
+    }
+    .rlt-head {
+        padding-top: 0.8rem;
+        padding-bottom: 0.8rem;
+        background: rgba(0,0,0,0.06);
+    }
+    .rlt-head .rlt-col {
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-weight: 700;
+        color: var(--text-muted);
+    }
+    .rlt-row {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--border-color);
+        transition: background 0.15s;
+    }
+    .rlt-row:last-child { border-bottom: none; }
+    .rlt-row:hover { background: rgba(0,255,170,0.03); }
+
+    .rlt-gold { background: rgba(255,204,0,0.03); }
+    .rlt-gold:hover { background: rgba(255,204,0,0.07) !important; }
+    .rlt-silver { background: rgba(192,192,192,0.02); }
+    .rlt-bronze { background: rgba(205,127,50,0.02); }
+
+    .medal-icon {
+        width: 30px; height: 30px;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 0.8rem;
+    }
+    .medal-icon.gold { background: rgba(255,204,0,0.15); color: #ffcc00; }
+    .medal-icon.silver { background: rgba(192,192,192,0.12); color: #c0c0c0; }
+    .medal-icon.bronze { background: rgba(205,127,50,0.12); color: #cd7f32; }
+
+    .pos-num {
+        font-family: 'Courier New', monospace;
+        font-weight: 800;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        padding-left: 6px;
+    }
+    .player-info { display: flex; align-items: center; gap: 0.7rem; }
+    .player-avatar, .player-avatar-ph {
+        width: 34px; height: 34px;
+        border-radius: 50%;
+        object-fit: cover;
+        flex-shrink: 0;
+    }
+    .player-avatar-ph {
+        background: var(--bg-body);
+        border: 1px solid var(--border-color);
+        display: flex; align-items: center; justify-content: center;
+        color: var(--text-muted); font-size: 0.8rem;
+    }
+    .player-name { font-weight: 700; font-size: 0.9rem; color: var(--text-main); }
+
+    .lvl-chip {
+        display: inline-flex; align-items: center; justify-content: center;
+        min-width: 28px; height: 24px;
+        border-radius: 6px;
+        background: rgba(0,255,170,0.08);
+        border: 1px solid rgba(0,255,170,0.12);
+        color: #00cc88;
+        font-size: 0.75rem; font-weight: 800;
+    }
+    .solved-count { font-weight: 700; color: var(--text-main); font-size: 0.9rem; }
+    .pts-val {
+        font-weight: 800; font-size: 1rem;
+        color: var(--accent);
+        font-family: 'Courier New', monospace;
+    }
+    .view-btn {
+        width: 30px; height: 30px;
+        border-radius: 8px;
+        display: flex; align-items: center; justify-content: center;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid var(--border-color);
+        color: var(--text-muted);
+        text-decoration: none;
+        font-size: 0.7rem;
+        transition: all 0.2s;
+    }
+    .view-btn:hover {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: white;
+    }
+
+    .rlt-empty {
+        text-align: center;
+        padding: 3rem 2rem;
+        color: var(--text-muted);
+    }
+    .rlt-empty i { font-size: 2.5rem; margin-bottom: 1rem; opacity: 0.15; display: block; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+        .podium-wrapper {
+            grid-template-columns: 1fr;
+            gap: 1.2rem;
+            max-width: 260px;
+        }
+        .slot-gold { order: -1; }
+        .podium-pedestal { display: none; }
+        .rlt-head, .rlt-row {
+            grid-template-columns: 40px 1fr 50px 60px 70px 36px;
+            padding: 0 1rem;
+        }
+    }
+    @media (max-width: 500px) {
+        .rlt-head, .rlt-row {
+            grid-template-columns: 35px 1fr 65px 32px;
+            padding: 0 0.8rem;
+        }
+        .col-lvl, .col-solved { display: none; }
+    }
+</style>
+
+{% endblock %}

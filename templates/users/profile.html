@@ -115,7 +115,35 @@
             </div>
 
             <!-- Locked Badges -->
-            <div class="profile-card p-4 shadow-sm">
+            <div class="profile-card p-4 shadow-sm mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="section-title mb-0"><i class="fas fa-check-circle me-2"></i>{% trans "Retos Resueltos" %}</h4>
+                    <span class="badge count-badge">{{ progress.solved_challenges.count }}</span>
+                </div>
+                
+                <div class="solved-challenges-list">
+                    {% for challenge in progress.solved_challenges.all %}
+                    <div class="solved-item d-flex justify-content-between align-items-center p-2 mb-2 border-bottom">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="challenge-cat-icon">
+                                <i class="fas fa-terminal"></i>
+                            </div>
+                            <div>
+                                <div class="challenge-title fw-bold">{{ challenge.title }}</div>
+                                <div class="challenge-meta small text-muted text-uppercase">{{ challenge.get_category_display }}</div>
+                            </div>
+                        </div>
+                        <div class="challenge-points text-accent fw-bold">
+                            +{{ challenge.points }} PTS
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p class="text-center text-muted py-3">No hay retos resueltos aún.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="profile-card p-4 shadow-sm mb-4">
                 <h5 class="section-title mb-4"><i class="fas fa-lock me-2"></i>{% trans "Próximos Logros" %}</h5>
                 <div class="row row-cols-3 row-cols-md-5 g-3">
                     {% for badge in locked_badges %}
@@ -327,6 +355,18 @@
     [data-theme="dark"] .badge-box { background: rgba(255,255,255,0.03); }
     [data-theme="dark"] .badge-box:hover { background: rgba(255,255,255,0.06); }
     [data-theme="dark"] .xp-progress-bg, [data-theme="dark"] .mastery-progress-bg { background: #0f1219; }
+
+    /* Solved Challenges List */
+    .text-accent { color: var(--accent); }
+    .solved-item { border-color: var(--border) !important; transition: background 0.2s; }
+    .solved-item:hover { background: rgba(0,255,170,0.05); }
+    .challenge-cat-icon {
+        width: 40px; height: 40px;
+        border-radius: 10px;
+        background: rgba(0,255,170,0.1);
+        color: var(--accent);
+        display: flex; align-items: center; justify-content: center;
+    }
 </style>
 
 <script>

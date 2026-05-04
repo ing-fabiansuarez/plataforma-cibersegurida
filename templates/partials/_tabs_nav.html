@@ -2,15 +2,12 @@
   <a href="/" {% if request.path == '/' %}class="active"{% endif %}><i class="tab-icon"></i> <span data-translate="¿Qué es?">¿Qué es?</span></a>
   <a href="{% url 'announcements_list' %}" {% if '/announcements' in request.path %}class="active"{% endif %} data-translate="Anuncios">Anuncios</a>
   <a href="{% url 'narrativas_list' %}" {% if '/narrativas' in request.path %}class="active"{% endif %} data-translate="Narrativas">Narrativas</a>
-  <a href="#" class="has-tooltip pending-link" data-tooltip="Próximamente..." data-translate="Eventos">Eventos</a>
-  <a href="#" class="has-tooltip pending-link" data-tooltip="Próximamente..." data-translate="Foro">Foro</a>
-  <a href="#" class="has-tooltip pending-link" data-tooltip="Próximamente..." data-translate="Estudiantes">Estudiantes</a>
+  <a href="{% url 'scoreboard' %}" {% if '/podio' in request.path %}class="active"{% endif %} data-translate="Ranking">Ranking</a>
   <a href="/challenges/" {% if '/challenges/' in request.path and 'instructor' not in request.path and 'create' not in request.path %}class="active"{% endif %} data-translate="Retos">Retos</a>
   {% if user.is_authenticated and user.role == 'INSTRUCTOR' or user.is_superuser %}
     <a href="{% url 'instructor_challenge_list' %}" {% if 'instructor/challenges/' in request.path and 'create' not in request.path %}class="active"{% endif %} data-translate="Panel Instructor">Panel Instructor</a>
     <a href="{% url 'instructor_badge_list' %}" {% if 'instructor/badges/' in request.path %}class="active"{% endif %}><i class="fas fa-medal me-1"></i> <span data-translate="Insignias">Insignias</span></a>
   {% endif %}
-  <a href="#" class="has-tooltip pending-link" data-tooltip="Próximamente..." data-translate="Encuestas">Encuestas</a>
   <div class="dropdown">
     <a href="#" data-translate="Documentos">Documentos ▾</a>
     <div class="dropdown-menu">

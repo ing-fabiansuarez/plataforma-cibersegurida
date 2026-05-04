@@ -19,6 +19,9 @@ urlpatterns = [
     path('challenges/', views.student_challenge_list, name='student_challenge_list'),
     path('challenges/<uuid:pk>/', views.challenge_detail, name='challenge_detail'),
     
+    # Scoreboard
+    path('podio/', views.scoreboard, name='scoreboard'),
+
     # User Profile
     path('profile/', views.user_profile, name='user_profile'),
     path('profile/<str:username>/', views.user_profile, name='user_profile_public'),
